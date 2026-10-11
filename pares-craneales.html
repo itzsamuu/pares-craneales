@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Los 12 pares craneales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBF6F8; --card:#fff; --ink:#1F1640; --muted:#665B82; --line:#E3D6E4; --mist:#F3EAF3;
+  --sens:#3E2F8F; --mot:#D43F78; --mix:#14877E;
+  --ok:#14877E; --bad:#C2273D;
+  --c:#3E2F8F; --ct:#ECE9F8;
+  --disp:'Bricolage Grotesque',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --body:'Newsreader',Georgia,'Times New Roman',serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,button,.ui{font-family:var(--disp)}
+button{cursor:pointer;color:inherit;font-size:15px}
+button:focus-visible,.nv:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+p{margin:0 0 .8em}
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(16px,4vw,40px)}
+
+/* NAV */
+.top{position:sticky;top:0;z-index:30;background:rgba(251,246,248,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:22px;padding-top:11px;padding-bottom:11px;flex-wrap:wrap}
+.brand{font:800 19px var(--disp);letter-spacing:-.02em;margin-right:auto}
+.top a{font:600 14px var(--disp);color:var(--ink);text-decoration:none;padding:6px 2px;border-bottom:2px solid transparent}
+.top a:hover{border-color:var(--mot)}
+.score{font:600 13px var(--disp);color:var(--muted);background:var(--mist);padding:6px 12px;border-radius:999px}
+
+/* HERO */
+.hero{padding:clamp(28px,5vw,60px) 0 clamp(36px,5vw,64px)}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,4vw,56px);align-items:start}
+h1{font-weight:800;font-size:clamp(2.6rem,7vw,5.1rem);line-height:.94;letter-spacing:-.045em;margin:0 0 18px}
+.lead{max-width:34em;color:var(--muted);font-size:1.08rem}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 14px}
+.fchip{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;font-weight:600}
+.fchip[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.fchip i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:7px;vertical-align:-1px}
+.roster{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.rbtn{position:relative;text-align:left;background:#fff;border:1.5px solid var(--line);border-top:5px solid var(--c);border-radius:10px;padding:9px 11px 11px;transition:transform .15s,background .15s}
+.rbtn:hover{transform:translateY(-2px)}
+.rbtn b{display:block;font:800 22px var(--disp);letter-spacing:-.03em;color:var(--c)}
+.rbtn span{display:block;font:500 12.5px/1.2 var(--disp);color:var(--muted)}
+.rbtn[aria-pressed="true"]{background:var(--ct);border-color:var(--c)}
+.rbtn.dim,.fdim{opacity:.28}
+.pd{display:flex;gap:3px;margin-top:7px}
+.pd i{width:7px;height:7px;border-radius:50%;background:var(--line)}
+.pd i.on{background:var(--c)}
+.preview{margin-top:16px;background:var(--ct);border-left:6px solid var(--c);border-radius:4px 14px 14px 4px;padding:16px 18px}
+.preview h3{margin:0 0 4px;font-size:1.25rem}
+.preview p{margin:0 0 12px;font-size:1rem}
+.tipo{display:inline-block;font:700 12px var(--disp);padding:3px 10px;border-radius:999px;background:var(--c);color:#fff;margin-left:8px;vertical-align:2px}
+.solid{background:var(--c);color:#fff;border:0;border-radius:999px;padding:10px 20px;font-weight:700}
+.solid:hover{filter:brightness(1.08)}
+.ghost{background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:9px 18px;font-weight:600}
+.ghost:hover{border-color:var(--c)}
+
+/* MAP */
+.mapbox{position:sticky;top:64px;background:#fff;border:1.5px solid var(--line);border-radius:22px;padding:14px 14px 10px}
+.mapbox svg{display:block;width:100%;max-height:74vh;height:auto}
+.cap{min-height:46px;margin:6px 6px 0;font:600 14px/1.35 var(--disp);color:var(--muted);text-align:center}
+.cap b{color:var(--ink)}
+.mapnote{font-size:.85rem;color:var(--muted);text-align:center;margin:0 8px 6px}
+.nv{cursor:pointer;transition:opacity .2s}
+.nv .ln{fill:none;stroke:var(--c);stroke-linecap:round}
+.nv .halo{fill:none;stroke:var(--c);stroke-linecap:round;stroke-width:17;opacity:0}
+.nv .dot{fill:var(--c);stroke:#fff;stroke-width:2}
+.nv .bulb{fill:var(--c);opacity:.85}
+.nv text{fill:#fff;font:700 9.5px var(--disp);text-anchor:middle;pointer-events:none}
+.nv:hover .halo,.nv.on .halo{opacity:.26}
+.nv.on .dot{stroke:var(--ink);stroke-width:2.5}
+.nv.dim{opacity:.16}
+.nv.pulse .halo{animation:pl 1s ease-in-out 3}
+@keyframes pl{0%,100%{opacity:.1}50%{opacity:.6}}
+.alab{font:600 11px var(--disp);fill:#8E82A8}
+
+/* EXPLORER */
+.band{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:clamp(30px,5vw,60px) 0}
+h2{font-weight:800;font-size:clamp(1.9rem,4.4vw,3rem);letter-spacing:-.035em;line-height:1;margin:0 0 10px}
+.sub{color:var(--muted);max-width:40em;margin-bottom:22px}
+.strip{display:flex;gap:6px;overflow-x:auto;padding:4px 2px 10px}
+.strip button{flex:0 0 auto;min-width:46px;border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:7px 10px;font:800 15px var(--disp);color:var(--c);border-bottom:4px solid var(--c)}
+.strip button[aria-pressed="true"]{background:var(--c);color:#fff}
+.nhead{display:flex;gap:18px;align-items:flex-start;margin:12px 0 6px;flex-wrap:wrap}
+.badge{flex:0 0 auto;min-width:92px;text-align:center;background:var(--c);color:#fff;font:800 clamp(2rem,5vw,3.2rem) var(--disp);letter-spacing:-.04em;line-height:1;padding:14px 12px;border-radius:18px 18px 18px 4px}
+.nhead h3{font-size:clamp(1.6rem,3.6vw,2.4rem);letter-spacing:-.03em;line-height:1.05;margin:2px 0 8px}
+.dato{margin:0;padding-left:14px;border-left:4px solid var(--c);max-width:38em;font-style:italic}
+.hace{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0 0}
+.hace span{background:var(--ct);color:var(--c);font:600 13px var(--disp);padding:4px 11px;border-radius:999px}
+.hnav{margin-left:auto;display:flex;gap:8px}
+.tabs{display:flex;gap:7px;flex-wrap:wrap;margin:22px 0 18px;border-bottom:1.5px solid var(--line);padding-bottom:14px}
+.tab{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:9px 17px;font-weight:700}
+.tab[aria-selected="true"]{background:var(--c);border-color:var(--c);color:#fff}
+.panel{animation:fi .25s ease}
+@keyframes fi{from{opacity:.2;transform:translateY(6px)}to{opacity:1;transform:none}}
+.tip{color:var(--muted);font-size:.95rem;margin-bottom:12px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
+
+.nuc{display:block;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);border-left:6px solid var(--c);border-radius:4px 12px 12px 4px;padding:13px 16px;margin-bottom:9px;position:relative}
+.nuc:hover{background:var(--ct)}
+.nuc .nt{display:inline-block;font:700 11.5px var(--disp);background:var(--ct);color:var(--c);border-radius:999px;padding:2px 9px;margin-bottom:5px}
+.nuc strong{display:block;font:700 1.05rem var(--disp)}
+.nuc .loc{display:block;color:var(--muted);font-size:.95rem}
+.nuc::after{content:"+";position:absolute;right:16px;top:12px;font:700 22px var(--disp);color:var(--c)}
+.nuc[aria-expanded="true"]::after{content:"\2212"}
+.nbody{background:var(--ct);border-radius:0 0 12px 12px;margin:-9px 0 9px;padding:14px 16px;border-left:6px solid var(--c);font-size:1.02rem}
+
+.apg{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.apc{background:var(--ct);border-radius:18px 18px 18px 4px;padding:22px}
+.apc .big{font:800 clamp(1.4rem,3vw,2rem) var(--disp);letter-spacing:-.03em;line-height:1.1;color:var(--c);margin-bottom:10px}
+.apc .tp{font-style:italic;border-top:1px dashed var(--c);padding-top:10px;margin-top:12px}
+.lvbox{background:#fff;border:1.5px solid var(--line);border-radius:18px;padding:18px}
+.lvbox h4{margin:0 0 10px;font-size:1rem}
+.lvs{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.lv{text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:9px;padding:8px 12px;font-weight:600}
+.lv[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.lv.mine{border-left:6px solid var(--c)}
+.lvres{display:flex;gap:7px;flex-wrap:wrap}
+.nchip{border:1.5px solid var(--cc);background:#fff;color:var(--cc);border-radius:10px;padding:6px 11px;font-weight:700;font-size:14px;text-align:left}
+.nchip small{display:block;font-weight:500;font-size:12px;color:var(--muted)}
+.nchip{cursor:pointer}
+.nchip:hover,.nchip.me{background:var(--cc);color:#fff}
+.nchip:hover small,.nchip.me small{color:#fff}
+
+.prog{height:8px;background:var(--mist);border-radius:99px;overflow:hidden;margin-bottom:14px}
+.prog div{height:100%;background:var(--c);transition:width .35s}
+.sdots{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.sdots button{width:38px;height:38px;border-radius:50%;border:2px solid var(--line);background:#fff;font-weight:800}
+.sdots button.past{background:var(--ct);border-color:var(--c);color:var(--c)}
+.sdots button.now{background:var(--c);border-color:var(--c);color:#fff;transform:scale(1.12)}
+.sdots button.key{box-shadow:0 0 0 3px #fff,0 0 0 5px var(--mot)}
+.step{background:var(--ct);border-radius:18px;padding:22px 24px;min-height:150px;border-left:8px solid var(--c)}
+.step small{font:700 13px var(--disp);color:var(--muted)}
+.step h3{margin:4px 0 8px;font-size:1.5rem;letter-spacing:-.02em}
+.step p{margin:0;font-size:1.08rem;max-width:42em}
+.kt{display:inline-block;margin-top:10px;font:700 12px var(--disp);background:var(--mot);color:#fff;border-radius:999px;padding:3px 11px}
+.ctl{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;align-items:center}
+.exitnote{margin-left:auto;font:600 14px var(--disp);color:var(--muted)}
+.exitnote b{color:var(--c)}
+
+.les{margin-bottom:9px}
+.lh{width:100%;text-align:left;display:flex;gap:12px;align-items:center;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:14px 16px}
+.lh:hover{border-color:var(--c)}
+.lh[aria-expanded="true"]{background:var(--ct);border-color:var(--c);border-radius:12px 12px 0 0}
+.lh strong{font:700 1.05rem var(--disp);display:block}
+.lh span{color:var(--muted);font-size:.93rem}
+.lh em{margin-left:auto;font:700 22px var(--disp);color:var(--c);font-style:normal}
+.lb{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1.5px solid var(--c);border-top:0;border-radius:0 0 12px 12px;overflow:hidden;background:#fff}
+.lb div{padding:16px 18px}
+.lb div+div{background:var(--ct)}
+.lb h5{margin:0 0 6px;font:700 13px var(--disp);color:var(--c)}
+.lb p{margin:0;font-size:1.02rem}
+
+.case .vig{background:var(--ct);border-left:8px solid var(--c);border-radius:4px 18px 18px 4px;padding:20px 24px;margin-bottom:16px}
+.case .vig h3{margin:0 0 8px;font-size:1.25rem}
+.case .vig p{margin:0;font-size:1.08rem}
+.q{font:700 1.15rem var(--disp);margin:0 0 10px}
+.opts{display:grid;gap:8px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:12px 16px;font:500 1rem/1.4 var(--body);width:100%}
+.opt .L{flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:var(--mist);display:grid;place-items:center;font:800 13px var(--disp)}
+.opt:hover:not(:disabled){border-color:var(--c);background:var(--ct)}
+.opt.right{border-color:var(--ok);background:#E2F4F1}
+.opt.right .L{background:var(--ok);color:#fff}
+.opt.wrong{border-color:var(--bad);background:#FBE4E8}
+.opt.wrong .L{background:var(--bad);color:#fff}
+.opt.off{opacity:.5}
+.opt:disabled{cursor:default}
+.row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.hint{margin-top:10px;background:#FFF6DD;border-left:5px solid #E2A91A;border-radius:4px 12px 12px 4px;padding:12px 16px;font-size:1rem}
+.fb{margin-top:14px;border-radius:14px;padding:15px 18px;font-size:1.04rem}
+.fb.ok{background:#E2F4F1;border-left:6px solid var(--ok)}
+.fb.no{background:#FBE4E8;border-left:6px solid var(--bad)}
+
+/* FORAMENES */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.fc{text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:16px;min-height:150px;display:flex;flex-direction:column;gap:8px;transition:border-color .15s,background .15s}
+.fc:hover{border-color:var(--ink)}
+.fc h4{margin:0;font-size:1.05rem;letter-spacing:-.01em}
+.fc .where{font-size:.9rem;color:var(--muted);line-height:1.35}
+.fc .back{display:none;flex-direction:column;gap:8px}
+.fc.open{background:var(--mist);border-color:var(--ink)}
+.fc.open .back{display:flex}
+.fc .qm{font:700 13px var(--disp);color:var(--muted);margin-top:auto}
+.fc.open .qm{display:none}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chips .nchip{padding:5px 10px}
+.fother{font-size:.9rem;color:var(--muted);line-height:1.35}
+
+/* QUIZ */
+.quiz{background:var(--ink);color:#F6EEF6;padding:clamp(34px,5vw,68px) 0}
+.quiz h2{color:#fff}
+.quiz .sub{color:#C9BFE0}
+.qbox{background:#2A1F57;border-radius:24px;padding:clamp(18px,3vw,34px);max-width:860px}
+.qchips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 18px}
+.qchips button{background:transparent;border:1.5px solid #5A4E92;color:#E8E0F5;border-radius:999px;padding:6px 13px;font-weight:700}
+.qchips button[aria-pressed="true"]{background:#fff;color:var(--ink);border-color:#fff}
+.quiz .solid{background:var(--mot)}
+.quiz .ghost{background:transparent;color:#fff;border-color:#5A4E92}
+.quiz .ghost:hover{border-color:#fff}
+.qprog{height:7px;background:#3C3070;border-radius:99px;overflow:hidden;margin-bottom:6px}
+.qprog div{height:100%;background:var(--mot);transition:width .3s}
+.qmeta{display:flex;justify-content:space-between;font:600 13px var(--disp);color:#C9BFE0;margin-bottom:16px}
+.qq{font:700 clamp(1.15rem,2.4vw,1.5rem)/1.25 var(--disp);color:#fff;margin:0 0 16px;letter-spacing:-.01em}
+.quiz .opt{background:#34286A;border-color:#4C4086;color:#fff}
+.quiz .opt .L{background:#4C4086}
+.quiz .opt:hover:not(:disabled){background:#413480;border-color:#fff}
+.quiz .opt.right{background:#146A63;border-color:#4FD1C0}
+.quiz .opt.wrong{background:#8C2340;border-color:#FF8CA6}
+.quiz .opt.off{opacity:.45}
+.quiz .fb{background:#34286A;color:#F6EEF6}
+.quiz .fb.ok{border-left-color:#4FD1C0}
+.quiz .fb.no{border-left-color:#FF8CA6}
+.big-score{font:800 clamp(3.4rem,10vw,6rem)/1 var(--disp);letter-spacing:-.05em;color:#fff}
+.big-score small{font-size:.35em;color:#C9BFE0;letter-spacing:0}
+.pern{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0 20px}
+.pern button{border-radius:10px;padding:7px 12px;font-weight:700;border:1.5px solid;background:transparent}
+.pern .g{border-color:#4FD1C0;color:#8EF0E2}
+.pern .r{border-color:#FF8CA6;color:#FFB4C5;background:rgba(255,140,166,.12)}
+.rev{background:#34286A;border-radius:14px;padding:16px 18px;margin-bottom:10px;border-left:6px solid #FF8CA6}
+.rev h4{margin:0 0 6px;font-size:1.02rem;color:#fff}
+.rev p{margin:0 0 8px;font-size:1rem}
+.rev .you{color:#FFB4C5}
+.rev .ans{color:#8EF0E2}
+
+footer{padding:26px 0 40px;color:var(--muted);font-size:.9rem}
+
+@media (max-width:900px){
+  .hero .wrap{grid-template-columns:1fr}
+  .mapbox{position:static}
+  .apg,.lb{grid-template-columns:1fr}
+  .roster{grid-template-columns:repeat(3,1fr)}
+  .hnav{margin-left:0}
+}
+@media (max-width:520px){
+  .roster{grid-template-columns:repeat(2,1fr)}
+  body{font-size:17px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <span class="brand">Pares craneales</span>
+    <a href="#mapa">Mapa</a>
+    <a href="#explorar">Explorar</a>
+    <a href="#foramenes">Forámenes</a>
+    <a href="#quiz">Quiz</a>
+    <span class="score" id="scoreTag">Casos resueltos: 0/12</span>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="mapa">
+  <div class="wrap">
+    <div>
+      <h1>Los 12 pares craneales</h1>
+      <p class="lead">Toca un nervio en el mapa o en la lista. Todo lo de abajo (núcleos, trayecto, lesiones y casos) se abre para ese par. Los puntos bajo cada tarjeta se llenan a medida que revisas sus cinco secciones.</p>
+      <div class="filters" id="filters" role="group" aria-label="Filtrar por función">
+        <button class="fchip" data-f="all" aria-pressed="true">Todos</button>
+        <button class="fchip" data-f="sensitivo" aria-pressed="false"><i style="background:var(--sens)"></i>Sensitivos</button>
+        <button class="fchip" data-f="motor" aria-pressed="false"><i style="background:var(--mot)"></i>Motores</button>
+        <button class="fchip" data-f="mixto" aria-pressed="false"><i style="background:var(--mix)"></i>Mixtos</button>
+      </div>
+      <div class="roster" id="roster"></div>
+      <div class="preview" id="preview"></div>
+    </div>
+    <div class="mapbox">
+      <div id="mapHost"></div>
+      <div class="cap" id="cap" aria-live="polite">Pasa el cursor o toca un punto.</div>
+      <p class="mapnote">Vista ventral del tronco encefálico. El IV nace por detrás y se ve rodeando el pedúnculo (línea punteada). Cada nervio está dibujado a ambos lados.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="explorar">
+  <div class="wrap">
+    <h2>Explora un par a fondo</h2>
+    <p class="sub">Elige el par arriba, cambia de pestaña y juega con cada sección. Cierra con el caso clínico: ahí se ve si te quedó.</p>
+    <div class="strip" id="strip" role="group" aria-label="Elegir par craneal"></div>
+    <div id="nerveHead"></div>
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <div id="panel" class="panel" role="tabpanel"></div>
+  </div>
+</section>
+
+<section id="foramenes" style="padding:clamp(30px,5vw,60px) 0">
+  <div class="wrap">
+    <h2>Por dónde sale cada uno</h2>
+    <p class="sub">Modo repaso: mira el agujero, piensa qué pares pasan y toca la tarjeta para comprobar. También puedes revelarlo todo de una vez.</p>
+    <div class="row" style="margin:0 0 16px">
+      <button class="ghost" id="revealAll">Revelar todos</button>
+      <button class="ghost" id="hideAll">Esconder todos</button>
+    </div>
+    <div class="fgrid" id="fgrid"></div>
+  </div>
+</section>
+
+<section class="quiz" id="quiz">
+  <div class="wrap">
+    <h2>Quiz con retroalimentación</h2>
+    <p class="sub">Te explica cada respuesta al instante y, al final, te dice qué pares repasar.</p>
+    <div class="qbox" id="qbox"></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">Material de estudio. Contrasta siempre con tu texto de neuroanatomía y con lo que te enseñen en clase.</div>
+</footer>
+
+<script>
+"use strict";
+var $=function(s){return document.querySelector(s)};
+var $$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
+var T={sensitivo:{c:"#3E2F8F",t:"#ECE9F8",l:"Sensitivo"},motor:{c:"#D43F78",t:"#FBE6EE",l:"Motor"},mixto:{c:"#14877E",t:"#DEF1EF",l:"Mixto"}};
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+
+/* ============== DATOS ============== */
+var N=[
+/* I */
+{r:"I",nombre:"Olfatorio",tipo:"sensitivo",nivel:["cer"],
+ dato:"Anosmia después de un golpe en la frente: piensa en la lámina cribosa.",
+ hace:["Olfato"],foramen:"Lámina cribosa del etmoides",
+ real:[
+  {n:"Neuronas bipolares del neuroepitelio olfatorio",tag:"Aferente visceral especial",loc:"Techo de la cavidad nasal",d:"Primera neurona de la vía. Sus axones amielínicos agrupados son los filetes olfatorios: todos juntos forman el «nervio». Son de las pocas neuronas que se regeneran toda la vida."},
+  {n:"Células mitrales y en penacho",tag:"Segunda neurona",loc:"Bulbo olfatorio",d:"Reciben los filetes en los glomérulos olfatorios. Sus axones forman el tracto olfatorio, que se divide en estrías olfatorias medial y lateral."}
+ ],
+ ap:{sitio:"Bulbo olfatorio",rel:"Cuelga bajo el lóbulo frontal, en el surco olfatorio. Lo que parece «el nervio» son los filetes que llegan al bulbo desde la nariz.",tip:"Es el único par que no sale del tronco: nace del telencéfalo."},
+ tr:[
+  {t:"Neuroepitelio olfatorio",d:"En el techo de la cavidad nasal. Los axones de las neuronas bipolares se agrupan en unos veinte filetes por lado."},
+  {t:"Lámina cribosa del etmoides",d:"Los filetes atraviesan los agujeritos de este hueso finísimo, acompañados de meninges. Es el punto débil de la vía.",key:true},
+  {t:"Bulbo olfatorio",d:"Hacen sinapsis con las células mitrales y en penacho en los glomérulos."},
+  {t:"Tracto olfatorio",d:"Corre por el surco olfatorio, en la cara inferior del lóbulo frontal."},
+  {t:"Estrías olfatorias",d:"El tracto se bifurca: la estría lateral lleva a la corteza piriforme y a la amígdala; la medial tiene conexiones límbicas con el área septal."},
+  {t:"Corteza olfatoria primaria",d:"Llega sin relevo previo en el tálamo. Después conecta con la corteza orbitofrontal (percepción consciente del olor) y con el sistema límbico (memoria y emoción).",key:true}
+ ],
+ les:[
+  {t:"Fractura de la base anterior del cráneo",c:"Trauma craneal",v:"Anosmia (uni o bilateral) y, a veces, rinorrea de LCR: agua clara por la nariz por desgarro de la duramadre.",e:"Prueba cada fosa nasal por separado con olores no irritantes (café, vainilla). Evita el amoníaco: estimula al V, no al I."},
+  {t:"Meningioma del surco olfatorio",c:"Tumor",v:"Anosmia unilateral progresiva. Si crece: síndrome de Foster Kennedy (atrofia óptica ipsilateral y papiledema contralateral).",e:"Fondo de ojo y resonancia con contraste."},
+  {t:"Infecciones y neurodegeneración",c:"Virus respiratorios, Parkinson, Alzheimer",v:"Hiposmia o anosmia; a veces es el primer síntoma, años antes que el resto.",e:"Pruebas estandarizadas de identificación de olores."}
+ ],
+ caso:{t:"Choque de moto sin casco",txt:"Hombre de 28 años con golpe frontal. Al día siguiente dice que «la comida no sabe a nada» y le gotea un líquido claro por la nariz al inclinarse. El TAC muestra fractura de la base anterior del cráneo.",q:"¿Qué se lesionó?",
+  o:["Núcleo del tracto solitario","Filetes olfatorios al cruzar la lámina cribosa","Corteza piriforme de ambos lados","Nervio facial dentro del conducto"],ok:1,
+  ex:"Los filetes olfatorios se desgarran en la lámina cribosa y, si también se rompe la duramadre, sale LCR. El «sabor» depende mucho del olfato retronasal; por eso lo refiere como falta de sabor, aunque lo dulce, salado, ácido y amargo siguen funcionando (gusto: VII, IX, X).",
+  pista:"El LCR sale por la nariz: busca un hueso fino por donde pasan fibras hacia la cavidad nasal."}},
+
+/* II */
+{r:"II",nombre:"Óptico",tipo:"sensitivo",nivel:["cer"],
+ dato:"Es parte del diencéfalo y el brazo aferente del reflejo pupilar. Por eso lo daña la esclerosis múltiple.",
+ hace:["Visión","Reflejo fotomotor (aferente)"],foramen:"Canal óptico",
+ real:[
+  {n:"Células ganglionares de la retina",tag:"Aferente somático especial",loc:"Capa interna de la retina",d:"Tercera neurona de la vía visual (fotorreceptor, bipolar y ganglionar). Sus axones convergen en el disco óptico y forman el nervio."},
+  {n:"Destinos centrales",tag:"Dónde hacen sinapsis",loc:"Diencéfalo y mesencéfalo",d:"Núcleo geniculado lateral (visión consciente), colículo superior (movimientos oculares rápidos) y área pretectal (reflejo fotomotor). El II es una prolongación del diencéfalo con oligodendrocitos, no un nervio periférico típico."}
+ ],
+ ap:{sitio:"Quiasma óptico (ángulo anterior)",rel:"Se ve en la cara ventral del diencéfalo, delante del tuber cinereum y encima de la hipófisis. Continúa como tractos ópticos hacia los cuerpos geniculados.",tip:"Más que «salir» del tronco, es una vía que pertenece al diencéfalo."},
+ tr:[
+  {t:"Retina y disco óptico",d:"Los axones convergen en el disco óptico (punto ciego) y perforan la esclera por la lámina cribosa."},
+  {t:"Órbita",d:"Va rodeado de vainas meníngeas con LCR. Por eso un aumento de presión intracraneal se ve como papiledema.",key:true},
+  {t:"Canal óptico",d:"Dentro del ala menor del esfenoides, junto a la arteria oftálmica.",key:true},
+  {t:"Quiasma óptico",d:"Se cruzan las fibras nasales de cada retina (las que ven el campo temporal). Las fibras temporales no cruzan.",key:true},
+  {t:"Tractos ópticos",d:"Cada tracto lleva el campo visual contralateral completo, de ambos ojos."},
+  {t:"Núcleo geniculado lateral y radiaciones ópticas",d:"Relevo talámico. Luego, el asa de Meyer (temporal) y la vía parietal."},
+  {t:"Corteza visual primaria",d:"Lóbulo occipital, a ambos lados de la cisura calcarina."}
+ ],
+ les:[
+  {t:"Neuritis óptica",c:"Desmielinización, esclerosis múltiple",v:"Pérdida de visión monocular subaguda, dolor al mover el ojo, colores apagados y defecto pupilar aferente relativo.",e:"Linterna alternada, agudeza visual, colores (Ishihara) y resonancia."},
+  {t:"Quiasma óptico",c:"Adenoma hipofisario, craneofaringioma",v:"Hemianopsia bitemporal: ves como con anteojeras. Suele empezar por los cuadrantes temporales superiores.",e:"Campimetría por confrontación o computarizada."},
+  {t:"Tracto óptico y radiaciones",c:"ACV, tumores",v:"Hemianopsia homónima contralateral. Radiación temporal: cuadrantanopsia superior («pastel en el cielo»); parietal: inferior.",e:"Campos visuales; la imagen confirma el sitio."}
+ ],
+ caso:{t:"Se choca con las puertas",txt:"Hombre de 45 años con cefalea, pérdida de libido y galactorrea. Dice que últimamente se golpea con las puertas «por los lados». En los campos visuales se pierden ambas mitades temporales.",q:"¿Dónde está la lesión?",
+  o:["Nervio óptico derecho","Tracto óptico izquierdo","Corteza occipital derecha","Quiasma óptico"],ok:3,
+  ex:"Hemianopsia bitemporal = quiasma. Un macroadenoma hipofisario (aquí, probablemente un prolactinoma) lo comprime desde abajo y daña las fibras nasales cruzadas.",
+  pista:"Pierde los dos campos externos, uno de cada ojo. ¿Dónde se cruzan solo unas fibras?"}},
+
+/* III */
+{r:"III",nombre:"Oculomotor",tipo:"motor",nivel:["mes"],
+ dato:"Ojo abajo y afuera + ptosis + pupila dilatada. Si la pupila está dilatada, piensa en compresión.",
+ hace:["Mueve el ojo","Eleva el párpado","Constriñe la pupila","Acomodación"],foramen:"Fisura orbitaria superior",
+ real:[
+  {n:"Núcleo oculomotor",tag:"Eferente somático",loc:"Mesencéfalo, a nivel del colículo superior",d:"Subnúcleos para recto medial, recto inferior y oblicuo inferior (ipsilaterales), recto superior (contralateral) y elevador del párpado (núcleo caudal central, bilateral)."},
+  {n:"Núcleo de Edinger-Westphal",tag:"Eferente visceral general (parasimpático)",loc:"Mesencéfalo, por encima del núcleo oculomotor",d:"Sus fibras hacen relevo en el ganglio ciliar y llegan al esfínter de la pupila y al músculo ciliar (acomodación)."}
+ ],
+ ap:{sitio:"Fosa interpeduncular",rel:"Emerge en la cara medial del pedúnculo cerebral, en el surco oculomotor, entre las arterias cerebral posterior y cerebelosa superior.",tip:"Piensa en el mesencéfalo ventral: el III sale mirando al centro, entre los pedúnculos."},
+ tr:[
+  {t:"Núcleos mesencefálicos",d:"Complejo oculomotor y Edinger-Westphal, ventrales al acueducto cerebral."},
+  {t:"Fosa interpeduncular",d:"Los fascículos atraviesan el tegmento y el núcleo rojo y emergen medialmente al pedúnculo."},
+  {t:"Cisterna interpeduncular",d:"Pasa entre la arteria cerebral posterior y la cerebelosa superior, junto a la comunicante posterior. Un aneurisma aquí lo comprime.",key:true},
+  {t:"Borde del tentorio y seno cavernoso",d:"Cruza el borde libre del tentorio (zona de herniación uncal) y entra a la pared lateral del seno cavernoso.",key:true},
+  {t:"Fisura orbitaria superior",d:"Entra a la órbita por el anillo tendinoso común.",key:true},
+  {t:"Órbita",d:"Se divide: la rama superior inerva el recto superior y el elevador del párpado; la inferior, recto medial, recto inferior, oblicuo inferior y la raíz que va al ganglio ciliar."}
+ ],
+ les:[
+  {t:"Compresión por aneurisma",c:"Aneurisma de la comunicante posterior",v:"Ptosis, midriasis arreactiva y ojo abajo y afuera. La pupila cae primero porque las fibras parasimpáticas van por fuera del nervio. Es urgencia: riesgo de hemorragia subaracnoidea.",e:"Tamaño y reflejo pupilar (directo y consensual), motilidad en las nueve posiciones, angio-TC o angio-RM."},
+  {t:"Isquemia microvascular",c:"Diabetes, hipertensión",v:"Oftalmoplejía con ptosis y pupila respetada, con dolor periorbitario frecuente. Suele mejorar solo en unos tres meses.",e:"Pupila normal con buen reflejo. Control metabólico; si la pupila se afecta, hay que descartar aneurisma."},
+  {t:"Herniación uncal",c:"Masa supratentorial, hematoma",v:"Pupila dilatada ipsilateral que pierde el reflejo (primer signo), luego ptosis y oftalmoplejía y, enseguida, caída del nivel de conciencia.",e:"Pupilas seriadas en el paciente neurocrítico. Es una emergencia neuroquirúrgica."}
+ ],
+ caso:{t:"La peor cefalea de su vida",txt:"Mujer de 54 años con cefalea súbita «como un golpe». Ptosis derecha, ojo derecho desviado hacia abajo y afuera y pupila derecha dilatada que no responde a la luz.",q:"¿Qué causa buscas primero?",
+  o:["Isquemia microvascular por diabetes","Aneurisma de la comunicante posterior que comprime el III","Neuritis óptica derecha","Lesión del núcleo del VI"],ok:1,
+  ex:"Con pupila afectada y cefalea explosiva, primero se descarta aneurisma de la comunicante posterior: las fibras pupilares periféricas son las primeras en comprimirse. En la isquemia diabética la pupila suele respetarse.",
+  pista:"Compara: si la pupila está dilatada, ¿las fibras que se dañaron van por dentro o por fuera del nervio?"}},
+
+/* IV */
+{r:"IV",nombre:"Troclear",tipo:"motor",nivel:["mes"],
+ dato:"Único que sale por detrás del tronco y único cuyo núcleo inerva el lado contrario.",
+ hace:["Oblicuo superior","Mirada hacia abajo y adentro"],foramen:"Fisura orbitaria superior",
+ real:[
+  {n:"Núcleo troclear",tag:"Eferente somático",loc:"Mesencéfalo caudal, a nivel del colículo inferior",d:"Sus axones rodean la sustancia gris periacueductal, se cruzan en el velo medular superior y salen por detrás. Por eso un núcleo derecho inerva el oblicuo superior izquierdo."}
+ ],
+ ap:{sitio:"Cara dorsal del tronco, bajo los colículos inferiores",rel:"Emerge a ambos lados del frenillo del velo medular superior y rodea el pedúnculo cerebral hacia adelante. Es el más delgado de los pares.",tip:"Si lo ves en una vista ventral, es porque viene rodeando el pedúnculo desde atrás."},
+ tr:[
+  {t:"Núcleo troclear",d:"Mesencéfalo caudal, ventral al acueducto."},
+  {t:"Decusación en el velo medular superior",d:"Los axones se dirigen hacia atrás y se cruzan antes de salir.",key:true},
+  {t:"Emergencia dorsal",d:"Sale justo debajo de los colículos inferiores."},
+  {t:"Rodea el pedúnculo cerebral",d:"Va por la cisterna ambiens, entre la cerebral posterior y la cerebelosa superior. Es el nervio con más trayecto intracraneal."},
+  {t:"Borde del tentorio y seno cavernoso",d:"Atraviesa el borde libre del tentorio y recorre la pared lateral del seno cavernoso.",key:true},
+  {t:"Fisura orbitaria superior",d:"Entra a la órbita por fuera del anillo tendinoso y cruza sobre el elevador del párpado hasta el oblicuo superior.",key:true}
+ ],
+ les:[
+  {t:"Traumatismo craneal",c:"Contragolpe contra el borde del tentorio",v:"Diplopía vertical u oblicua, peor al mirar abajo y adentro (bajar escaleras, leer). Ojo afectado más alto (hipertropía) y cabeza inclinada hacia el lado sano.",e:"Prueba de Bielschowsky: al inclinar la cabeza hacia el lado afectado, el ojo sube más. Cover test y la prueba de tres pasos de Parks."},
+  {t:"Isquemia microvascular",c:"Diabetes, hipertensión",v:"Diplopía vertical aislada de aparición brusca; suele recuperarse en semanas o meses.",e:"Exploración motora ocular y control de factores de riesgo."},
+  {t:"Lesión nuclear o fascicular",c:"Mesencéfalo dorsal",v:"Paresia del oblicuo superior contralateral al núcleo lesionado, por la decusación.",e:"Si es contralateral y hay otros signos mesencefálicos, piensa en lesión del tronco."}
+ ],
+ caso:{t:"Doble al bajar escaleras",txt:"Hombre de 30 años que se cayó de la bicicleta y se golpeó la cabeza. Desde entonces ve doble, sobre todo al bajar escaleras o al leer. Inclina la cabeza hacia el hombro izquierdo y la diplopía mejora; al inclinarla a la derecha empeora.",q:"¿Qué nervio está lesionado?",
+  o:["III izquierdo","IV derecho","IV izquierdo","VI derecho"],ok:1,
+  ex:"La inclinación hacia el lado sano alivia: eso apunta al IV derecho. Con oblicuo superior derecho débil, el ojo derecho queda alto; inclinar la cabeza hacia la derecha empeora (Bielschowsky positivo).",
+  pista:"El paciente inclina la cabeza hacia el lado contrario al de la lesión, y la diplopía es vertical."}},
+
+/* V */
+{r:"V",nombre:"Trigémino",tipo:"mixto",nivel:["pon"],
+ dato:"V1 → fisura orbitaria superior, V2 → redondo, V3 → oval. Uno, dos, tres.",
+ hace:["Sensibilidad de la cara","Músculos de la masticación","Reflejo corneal (aferente)"],foramen:"V1: fisura orbitaria sup. · V2: foramen redondo · V3: foramen oval",
+ real:[
+  {n:"Núcleo mesencefálico",tag:"Aferente propioceptivo",loc:"Mesencéfalo",d:"Propiocepción de los músculos de la masticación y de los dientes. Es especial: sus neuronas son pseudounipolares dentro del tronco, no en el ganglio."},
+  {n:"Núcleo sensitivo principal",tag:"Aferente somático general",loc:"Protuberancia",d:"Tacto discriminativo y presión de la cara."},
+  {n:"Núcleo espinal del trigémino",tag:"Aferente somático general",loc:"Desde la protuberancia hasta C2-C3",d:"Dolor y temperatura de la cara. Su parte caudal (subnúcleo caudal) tiene distribución en «cáscara de cebolla»."},
+  {n:"Núcleo motor del trigémino",tag:"Eferente branquial",loc:"Protuberancia",d:"Músculos masticadores (masetero, temporal, pterigoideos), milohioideo, vientre anterior del digástrico, tensor del tímpano y tensor del velo del paladar."}
+ ],
+ ap:{sitio:"Cara lateral de la protuberancia",rel:"Sale en el límite con el pedúnculo cerebeloso medio, como dos raíces: una sensitiva gruesa y una motora delgada, medial a ella.",tip:"Es el par que marca la protuberancia, y el más grueso de los doce."},
+ tr:[
+  {t:"Raíces sensitiva y motora",d:"Salen por la cara lateral de la protuberancia y cruzan la fosa craneal posterior hacia el cavum trigeminal."},
+  {t:"Cavum trigeminal y ganglio trigeminal",d:"En la fosa craneal media, sobre el hueso temporal. En el ganglio (de Gasser o semilunar) están los cuerpos de las neuronas sensitivas.",key:true},
+  {t:"V1, oftálmico",d:"Sale por la fisura orbitaria superior (ramas frontal, lagrimal y nasociliar).",key:true},
+  {t:"V2, maxilar",d:"Sale por el foramen redondo, cruza la fosa pterigopalatina y llega a la cara por el canal y foramen infraorbitario.",key:true},
+  {t:"V3, mandibular",d:"Sale por el foramen oval. Es la única rama mixta: la raíz motora se le une y baja con ella.",key:true},
+  {t:"Ramas terminales",d:"V3 da auriculotemporal, lingual, alveolar inferior y nervios masticadores."}
+ ],
+ les:[
+  {t:"Neuralgia del trigémino",c:"Compresión vascular de la raíz (arteria cerebelosa superior)",v:"Descargas eléctricas de segundos en V2 y V3, desencadenadas por hablar, masticar, lavarse los dientes o el viento. Sin déficit sensitivo evidente.",e:"Se explora una zona gatillo y la sensibilidad (que es normal). Resonancia para descartar tumor o esclerosis múltiple. Primera línea: carbamazepina."},
+  {t:"Zóster oftálmico",c:"Reactivación del virus varicela-zóster en V1",v:"Dolor y vesículas en frente y párpado. Vesículas en la punta de la nariz (signo de Hutchinson) avisan de compromiso del nasociliar y de la córnea.",e:"Pide valoración oftalmológica urgente; antivirales."},
+  {t:"Lesión de V1 o del ganglio",c:"Tumor, seno cavernoso",v:"Pérdida del reflejo corneal en ese lado y anestesia corneal con riesgo de úlcera.",e:"Toca la córnea con algodón: el V siente (aferente) y el VII parpadea (eferente)."},
+  {t:"Lesión de la raíz motora (V3)",c:"Tumor, trauma",v:"Debilidad y atrofia del masetero y temporal; al abrir la boca la mandíbula se desvía hacia el lado lesionado.",e:"Palpa maseteros al apretar los dientes y observa la desviación al abrir."}
+ ],
+ caso:{t:"Dolor al lavarse los dientes",txt:"Mujer de 62 años con descargas eléctricas de pocos segundos en la mejilla derecha al lavarse los dientes o con el viento. No hay déficit sensitivo en la exploración.",q:"¿Qué diagnóstico y qué ramas se afectan más?",
+  o:["Herpes zóster oftálmico, V1","Parálisis de Bell, VII","Neuralgia glosofaríngea, IX","Neuralgia del trigémino, V2 y V3"],ok:3,
+  ex:"Dolor paroxístico, breve, en V2 y V3, con zona gatillo y exploración normal: neuralgia del trigémino. Suele deberse a compresión vascular de la raíz. Primera línea: carbamazepina.",
+  pista:"Dura segundos, tiene gatillo y la sensibilidad de la cara es normal."}},
+
+/* VI */
+{r:"VI",nombre:"Abducens",tipo:"motor",nivel:["sulc"],
+ dato:"Trayecto largo y ascendente: lo estira la hipertensión intracraneal (falso localizador).",
+ hace:["Abducción del ojo (recto lateral)"],foramen:"Fisura orbitaria superior",
+ real:[
+  {n:"Núcleo abducens",tag:"Eferente somático",loc:"Protuberancia caudal, en el suelo del IV ventrículo",d:"Está rodeado por las fibras del facial, y juntos forman el colículo facial. Además de las neuronas motoras tiene interneuronas que cruzan y suben por el fascículo longitudinal medial al núcleo del III contralateral: coordinan la mirada horizontal."}
+ ],
+ ap:{sitio:"Surco bulbopontino, en posición medial",rel:"Aparece entre la protuberancia y la pirámide bulbar, cerca de la línea media, por encima de la pirámide.",tip:"Si el VI sale medial, el VII y VIII salen laterales, en el mismo surco."},
+ tr:[
+  {t:"Núcleo abducens",d:"Protuberancia caudal, bajo el colículo facial."},
+  {t:"Fascículo y emergencia",d:"Atraviesa la protuberancia de atrás hacia adelante y sale por el surco bulbopontino."},
+  {t:"Cisterna prepontina",d:"Asciende pegado al clivus. Es largo, y por eso sufre cuando el encéfalo desciende.",key:true},
+  {t:"Canal de Dorello",d:"Perfora la duramadre y pasa bajo el ligamento petroesfenoidal (de Gruber), en el vértice del peñasco.",key:true},
+  {t:"Seno cavernoso",d:"Va libre dentro del seno, al lado de la carótida interna. Los demás nervios discurren por la pared lateral.",key:true},
+  {t:"Fisura orbitaria superior",d:"Entra a la órbita por el anillo tendinoso y llega al recto lateral."}
+ ],
+ les:[
+  {t:"Hipertensión intracraneal",c:"Hipertensión intracraneal idiopática, tumor",v:"Diplopía horizontal que empeora al mirar hacia el lado afectado. Con papiledema, cefalea y visión borrosa transitoria.",e:"Mirada horizontal en cada ojo, fondo de ojo y punción lumbar con presión de apertura (si no hay masa)."},
+  {t:"Síndrome de Gradenigo",c:"Petrositis (otitis media complicada)",v:"Parálisis del VI + dolor facial profundo (V) + otorrea.",e:"Imagen del peñasco y manejo infectológico urgente."},
+  {t:"Lesión pontina (núcleo)",c:"ACV, tumor, esclerosis múltiple",v:"No puede mirar hacia el lado de la lesión con ningún ojo (parálisis de mirada horizontal), a veces con parálisis facial periférica por la cercanía del VII.",e:"Si la parálisis es de la mirada conjugada y no solo del recto lateral, piensa en el núcleo."}
+ ],
+ caso:{t:"Cefalea y visión doble",txt:"Mujer de 24 años con obesidad, cefalea diaria y visión borrosa transitoria. Ve doble en horizontal, sobre todo al mirar a la derecha. El ojo derecho no abduce y el fondo de ojo muestra papiledema bilateral.",q:"¿Cuál es la explicación?",
+  o:["Lesión del núcleo del VI derecho","Parálisis del VI derecho por hipertensión intracraneal","Aneurisma de la comunicante posterior","Lesión del recto medial derecho"],ok:1,
+  ex:"El VI hace un trayecto largo sobre el clivus y se estira cuando sube la presión intracraneal: es un falso localizador. Junto con obesidad y papiledema, piensa en hipertensión intracraneal idiopática.",
+  pista:"No hay lesión focal en el nervio: ¿qué pasa con el nervio con más recorrido ascendente cuando sube la presión?"}},
+
+/* VII */
+{r:"VII",nombre:"Facial",tipo:"mixto",nivel:["sulc"],
+ dato:"Frente afectada = lesión periférica. Frente respetada = piensa en ACV.",
+ hace:["Mímica facial","Lágrima y saliva","Gusto 2/3 anteriores","Estapedio"],foramen:"Meato acústico interno y foramen estilomastoideo",
+ real:[
+  {n:"Núcleo motor del facial",tag:"Eferente branquial",loc:"Protuberancia caudal, ventrolateral",d:"Músculos de la expresión facial, estapedio, estilohioideo y vientre posterior del digástrico. La parte que inerva la frente recibe fibras de ambos hemisferios."},
+  {n:"Núcleo salival superior",tag:"Eferente visceral general (parasimpático)",loc:"Protuberancia caudal",d:"Glándulas lagrimal, submandibular, sublingual, nasales y palatinas."},
+  {n:"Núcleo del tracto solitario (parte rostral)",tag:"Aferente visceral especial",loc:"Bulbo",d:"Gusto de los dos tercios anteriores de la lengua."},
+  {n:"Núcleo espinal del trigémino",tag:"Aferente somático general",loc:"Protuberancia y bulbo",d:"Sensibilidad de una pequeña zona de la piel del pabellón y del conducto auditivo externo."}
+ ],
+ ap:{sitio:"Surco bulbopontino, lateral al VI",rel:"Sale en el ángulo pontocerebeloso junto con el nervio intermedio (la raíz sensitiva y parasimpática) y delante del VIII.",tip:"VII motor + intermedio de Wrisberg = «facial completo»."},
+ tr:[
+  {t:"Asa alrededor del núcleo del VI",d:"Los axones motores rodean el núcleo abducens (colículo facial) antes de salir."},
+  {t:"Ángulo pontocerebeloso",d:"Sale con el nervio intermedio, delante del VIII.",key:true},
+  {t:"Meato acústico interno",d:"Entra con el VIII y pasa al conducto facial.",key:true},
+  {t:"Segmento laberíntico y ganglio geniculado",d:"En el ganglio geniculado nacen el nervio petroso mayor (lágrima) y se localizan las neuronas del gusto.",key:true},
+  {t:"Segmento timpánico y mastoideo",d:"Da el nervio del estapedio y la cuerda del tímpano (gusto 2/3 anteriores y saliva submandibular).",key:true},
+  {t:"Foramen estilomastoideo",d:"Sale del cráneo entre la apófisis estiloides y la mastoides.",key:true},
+  {t:"Plexo parotídeo",d:"Atraviesa la parótida y se divide: temporal, cigomática, bucal, mandibular marginal y cervical."}
+ ],
+ les:[
+  {t:"Parálisis de Bell",c:"Idiopática (neuritis, a menudo post-viral)",v:"Toda la hemicara caída: no cierra el ojo, no frunce la frente, babea. Según el nivel, hay hiperacusia, pérdida del gusto y menos lágrima.",e:"Frente, cierre palpebral, sonrisa. Inicia corticoides precoces según tu protocolo."},
+  {t:"Síndrome de Ramsay Hunt",c:"Zóster del ganglio geniculado",v:"Parálisis facial periférica con vesículas en el oído (y, a veces, hipoacusia o vértigo).",e:"Mira el pabellón y el conducto auditivo; antivirales y corticoides."},
+  {t:"Parálisis facial central",c:"ACV del hemisferio contrario",v:"Cae la parte inferior de la cara; la frente se respeta porque tiene inervación cortical bilateral.",e:"Pide al paciente que frunza la frente: si lo logra, lo más probable es que sea central."},
+  {t:"Lesión en la parótida",c:"Tumor, cirugía",v:"Parálisis motora sin alteración del gusto ni de la lágrima, porque ya salieron esas ramas.",e:"Busca masa parotídea y cicatrices."}
+ ],
+ caso:{t:"Despierta con la cara caída",txt:"Hombre de 40 años que se despierta con el lado izquierdo de la cara «caído». No puede cerrar el ojo ni arrugar la frente, babea al beber y los sonidos le molestan más en el oído izquierdo.",q:"¿Qué dato te dice que es periférica y no un ACV?",
+  o:["Que babea","La frente también está paralizada","Que no puede cerrar el ojo","Que hay hiperacusia"],ok:1,
+  ex:"La frente tiene inervación cortical bilateral: en un ACV se respeta. Que también esté paralizada indica lesión de la motoneurona inferior. La hiperacusia ubica la lesión antes de la rama del estapedio.",
+  pista:"¿Qué parte de la cara recibe orden de los dos hemisferios?"}},
+
+/* VIII */
+{r:"VIII",nombre:"Vestibulococlear",tipo:"sensitivo",nivel:["sulc"],
+ dato:"Hipoacusia unilateral + acúfeno: descarta schwannoma vestibular.",
+ hace:["Audición","Equilibrio"],foramen:"Meato acústico interno",
+ real:[
+  {n:"Ganglio espiral y ganglio vestibular",tag:"Neuronas bipolares",loc:"Cóclea y conducto auditivo interno",d:"Primera neurona de cada vía. El ganglio espiral (de Corti) para la audición; el de Scarpa para el equilibrio."},
+  {n:"Núcleos cocleares dorsal y ventral",tag:"Aferente somático especial",loc:"Unión bulbopontina, sobre el pedúnculo cerebeloso inferior",d:"Segunda neurona auditiva. Siguen: oliva superior, lemnisco lateral, colículo inferior, geniculado medial y corteza auditiva (giro de Heschl)."},
+  {n:"Núcleos vestibulares (superior, medial, lateral e inferior)",tag:"Aferente somático especial",loc:"Suelo del IV ventrículo",d:"Conectan con el cerebelo (lóbulo floculonodular), los núcleos oculomotores por el fascículo longitudinal medial y la médula (tracto vestibuloespinal)."}
+ ],
+ ap:{sitio:"Surco bulbopontino, lateral al facial",rel:"Entra al tronco en el ángulo pontocerebeloso, detrás del VII y del nervio intermedio.",tip:"Es un nervio puramente sensitivo: «entra» más que «sale»."},
+ tr:[
+  {t:"Órgano de Corti y órganos vestibulares",d:"Células ciliadas de la cóclea y de los conductos semicirculares, el utrículo y el sáculo."},
+  {t:"Ganglios espiral y vestibular",d:"Neuronas bipolares: su axón central forma el nervio."},
+  {t:"Meato acústico interno",d:"Viaja junto con el VII y la arteria laberíntica.",key:true},
+  {t:"Ángulo pontocerebeloso",d:"Aquí lo comprimen los tumores del ángulo.",key:true},
+  {t:"Núcleos cocleares y vestibulares",d:"Entra en la unión pontobulbar y hace sinapsis."},
+  {t:"Vía auditiva",d:"Oliva superior (bilateral), lemnisco lateral, colículo inferior, núcleo geniculado medial y corteza auditiva primaria del lóbulo temporal.",key:true}
+ ],
+ les:[
+  {t:"Schwannoma vestibular (neurinoma del acústico)",c:"Tumor benigno del VIII",v:"Hipoacusia neurosensorial unilateral progresiva, acúfeno e inestabilidad. Si crece comprime el V (menos reflejo corneal) y el VII. Bilateral: neurofibromatosis tipo 2.",e:"Weber lateraliza al oído sano; Rinne positivo. Audiometría y resonancia con gadolinio."},
+  {t:"Neuritis vestibular",c:"Probablemente viral",v:"Vértigo agudo intenso con nistagmo y náuseas, sin pérdida de audición.",e:"Nistagmo horizontal-rotatorio, prueba del impulso cefálico anormal."},
+  {t:"Ototoxicidad",c:"Aminoglucósidos, cisplatino",v:"Hipoacusia neurosensorial bilateral y alteraciones del equilibrio.",e:"Audiometría seriada durante el tratamiento."}
+ ],
+ caso:{t:"Oye cada vez menos del izquierdo",txt:"Mujer de 50 años con hipoacusia progresiva en el oído izquierdo, zumbido e inestabilidad al caminar. Weber lateraliza hacia el oído derecho y el Rinne es positivo en ambos oídos.",q:"¿Qué tipo de pérdida y qué sospechas?",
+  o:["Conductiva izquierda: otosclerosis","Neurosensorial izquierda: schwannoma vestibular","Neurosensorial derecha: ototoxicidad","Conductiva derecha: tapón de cerumen"],ok:1,
+  ex:"Rinne positivo en ambos lados (la vía aérea gana a la ósea) y Weber hacia el oído sano indican pérdida neurosensorial del oído izquierdo. Unilateral y progresiva con acúfeno: schwannoma vestibular hasta demostrar lo contrario. Pide resonancia con gadolinio.",
+  pista:"En la pérdida neurosensorial el Weber va hacia el oído sano; en la conductiva, hacia el enfermo."}},
+
+/* IX */
+{r:"IX",nombre:"Glosofaríngeo",tipo:"mixto",nivel:["bul"],
+ dato:"Reflejo nauseoso: la vía sensitiva es del IX; la motora, del X.",
+ hace:["Gusto 1/3 posterior","Sensibilidad faríngea","Saliva parotídea","Presión arterial (seno carotídeo)"],foramen:"Foramen yugular",
+ real:[
+  {n:"Núcleo ambiguo",tag:"Eferente branquial",loc:"Bulbo",d:"Inerva el músculo estilofaríngeo."},
+  {n:"Núcleo salival inferior",tag:"Eferente visceral general (parasimpático)",loc:"Bulbo",d:"Va al ganglio ótico y estimula la parótida."},
+  {n:"Núcleo del tracto solitario",tag:"Aferente visceral",loc:"Bulbo",d:"Gusto del tercio posterior de la lengua y aferencias del seno carotídeo (barorreceptores) y del cuerpo carotídeo (quimiorreceptores)."},
+  {n:"Núcleo espinal del trigémino",tag:"Aferente somático general",loc:"Bulbo",d:"Sensibilidad general de la faringe, el oído medio y el tercio posterior de la lengua."}
+ ],
+ ap:{sitio:"Surco retroolivar, la raicilla más alta",rel:"En el bulbo, por detrás de la oliva. Salen en fila IX, X y la raíz craneal del XI, de arriba abajo.",tip:"Retroolivar = IX, X, XI. Preolivar = XII."},
+ tr:[
+  {t:"Núcleos bulbares",d:"Ambiguo, salival inferior y tracto solitario."},
+  {t:"Surco retroolivar",d:"Sale en el surco posterolateral del bulbo."},
+  {t:"Foramen yugular",d:"Sale del cráneo junto con el X, el XI y la vena yugular interna.",key:true},
+  {t:"Ganglios superior e inferior",d:"Aquí están los cuerpos de las neuronas sensitivas."},
+  {t:"Espacio parafaríngeo",d:"Desciende entre la carótida interna y la vena yugular interna y luego pasa lateral a la carótida interna.",key:true},
+  {t:"Ramas",d:"Nervio timpánico (Jacobson) que forma el petroso menor y llega a la parótida por el ganglio ótico; nervio del seno carotídeo (Hering); ramas faríngeas y linguales; rama al estilofaríngeo."}
+ ],
+ les:[
+  {t:"Neuralgia glosofaríngea",c:"Compresión vascular, tumor",v:"Dolor paroxístico intenso en garganta, amígdala u oído, desencadenado al tragar, toser o bostezar. A veces con bradicardia o síncope.",e:"Anestesia tópica de la faringe que lo calma ayuda al diagnóstico. Resonancia."},
+  {t:"Síndrome del foramen yugular (Vernet)",c:"Glomus yugular, metástasis, trauma",v:"Lesión de IX, X y XI juntos: disfagia, voz ronca, pérdida del reflejo nauseoso en ese lado y debilidad del trapecio y del esternocleidomastoideo.",e:"Reflejo nauseoso, elevación del paladar, voz, trapecio y ECM; luego TAC o RM de la base del cráneo."},
+  {t:"Lesión aislada del IX",c:"Rara",v:"Pérdida del reflejo nauseoso y del gusto en el tercio posterior de la lengua en ese lado.",e:"Prueba del gusto en la base de la lengua y sensibilidad faríngea."}
+ ],
+ caso:{t:"Dolor de garganta que sube al oído",txt:"Hombre de 58 años con dolor muy intenso de segundos de duración en la garganta, que irradia al oído, al tragar o al bostezar. Una vez se desmayó durante un episodio.",q:"¿Cuál es el diagnóstico más probable?",
+  o:["Neuralgia glosofaríngea","Neuralgia del trigémino, V3","Parálisis del laríngeo recurrente","Faringitis aguda"],ok:0,
+  ex:"Dolor paroxístico en el territorio del IX desencadenado al tragar. El síncope se explica por la estimulación del nervio del seno carotídeo (nervio de Hering) y la bradicardia vagal, lo que a veces causa asistolia.",
+  pista:"¿Qué nervio recoge la sensibilidad de la faringe y del oído medio y se conecta con el seno carotídeo?"}},
+
+/* X */
+{r:"X",nombre:"Vago",tipo:"mixto",nivel:["bul"],
+ dato:"El recurrente izquierdo baja más: rodea el arco aórtico.",
+ hace:["Faringe y laringe","Paladar blando","Parasimpático de tórax y abdomen","Aferencias viscerales"],foramen:"Foramen yugular",
+ real:[
+  {n:"Núcleo ambiguo",tag:"Eferente branquial",loc:"Bulbo",d:"Músculos de la faringe, laringe y paladar blando (salvo el tensor del velo del paladar, que es del V3) y el palatogloso."},
+  {n:"Núcleo motor dorsal del vago",tag:"Eferente visceral general (parasimpático)",loc:"Bulbo",d:"Tórax y abdomen hasta el ángulo cólico izquierdo."},
+  {n:"Núcleo del tracto solitario",tag:"Aferente visceral",loc:"Bulbo",d:"Aferencias viscerales y gusto de la epiglotis."},
+  {n:"Núcleo espinal del trigémino",tag:"Aferente somático general",loc:"Bulbo",d:"Sensibilidad del conducto auditivo externo por la rama auricular (de Arnold)."}
+ ],
+ ap:{sitio:"Surco retroolivar, entre el IX y el XI",rel:"Son diez a quince raicillas por detrás de la oliva, debajo del IX.",tip:"Retroolivar: IX arriba, X al medio, XI abajo."},
+ tr:[
+  {t:"Surco retroolivar",d:"Las raicillas se unen en un tronco."},
+  {t:"Foramen yugular",d:"Sale con el IX, el XI y la vena yugular interna.",key:true},
+  {t:"Ganglios superior (yugular) e inferior (nodoso)",d:"Con los cuerpos de las neuronas sensitivas."},
+  {t:"Vaina carotídea",d:"Desciende entre la carótida y la yugular interna. Da ramas faríngeas y el nervio laríngeo superior (rama interna sensitiva, rama externa motora para el cricotiroideo).",key:true},
+  {t:"Tórax",d:"El derecho cruza la arteria subclavia y de ahí nace el recurrente derecho que la rodea. El izquierdo cruza el arco aórtico y su recurrente rodea el ligamento arterioso.",key:true},
+  {t:"Plexo esofágico y hiato",d:"Forman los troncos vagales anterior (sobre todo izquierdo) y posterior (sobre todo derecho) que pasan por el hiato esofágico."},
+  {t:"Abdomen",d:"Estómago, hígado, vías biliares, páncreas e intestino hasta el ángulo cólico izquierdo."}
+ ],
+ les:[
+  {t:"Lesión del laríngeo recurrente",c:"Tiroidectomía, cáncer de pulmón, aneurisma aórtico",v:"Voz ronca y débil por parálisis de la cuerda vocal. Si es bilateral: estridor y emergencia de la vía aérea.",e:"Laringoscopia. Recuerda que el izquierdo tiene recorrido más largo."},
+  {t:"Lesión del laríngeo superior (rama externa)",c:"Cirugía de tiroides",v:"Voz fatigable y pérdida de los tonos agudos por debilidad del cricotiroideo.",e:"Evalúa la voz cantada o los tonos altos."},
+  {t:"Lesión alta del vago",c:"Tumor, trauma, foramen yugular",v:"Voz nasal, disfagia, falta de elevación del paladar del lado afectado y úvula desviada hacia el lado sano.",e:"Pide decir «aaah»: la úvula se va hacia el lado sano. Prueba el reflejo nauseoso."}
+ ],
+ caso:{t:"Voz ronca tras la cirugía",txt:"Mujer de 45 años a la que se le hizo una tiroidectomía total. Al despertar tiene la voz ronca y débil, sin estridor.",q:"¿Qué estructura se lesionó?",
+  o:["Nervio hipogloso","Nervio accesorio","Nervio laríngeo recurrente","Nervio laríngeo superior, rama externa"],ok:2,
+  ex:"El recurrente se relaciona con la arteria tiroidea inferior y el borde posterior del tiroides: es el más expuesto en la cirugía. Si fuera la rama externa del laríngeo superior, la voz sería fatigable con pérdida de tonos agudos, no ronca y débil.",
+  pista:"Piensa en el vago y el recorrido que hace junto a la glándula tiroides."}},
+
+/* XI */
+{r:"XI",nombre:"Accesorio",tipo:"motor",nivel:["bul","med"],
+ dato:"El más expuesto en el triángulo cervical posterior.",
+ hace:["Esternocleidomastoideo","Trapecio"],foramen:"Foramen magno (sube) y foramen yugular (sale)",
+ real:[
+  {n:"Núcleo accesorio espinal",tag:"Eferente branquial",loc:"Asta anterior de C1 a C5 o C6",d:"Inerva el esternocleidomastoideo y el trapecio. La llamada «raíz craneal» sale del núcleo ambiguo y se une al vago; hoy se considera parte de este."}
+ ],
+ ap:{sitio:"Lateral a la médula cervical (C1 a C5)",rel:"Las raicillas salen entre las raíces anteriores y posteriores, se unen y suben por el foramen magno. La raíz craneal sale en el surco retroolivar, debajo del X.",tip:"Es el único par que entra al cráneo desde abajo."},
+ tr:[
+  {t:"Asta anterior de C1 a C5",d:"Salen raicillas laterales a la médula cervical."},
+  {t:"Ascenso por el canal vertebral",d:"Se une en un tronco que sube lateral a la médula."},
+  {t:"Foramen magno",d:"Entra al cráneo por aquí, y sigue hacia el foramen yugular.",key:true},
+  {t:"Foramen yugular",d:"Sale con el IX, el X y la yugular interna.",key:true},
+  {t:"Esternocleidomastoideo",d:"Desciende por detrás de la yugular interna, inerva el ECM y sale por su borde posterior."},
+  {t:"Triángulo cervical posterior",d:"Cruza el triángulo muy superficial, por encima del elevador de la escápula: es vulnerable en biopsias y disecciones.",key:true},
+  {t:"Trapecio",d:"Entra a su cara profunda y lo inerva junto con ramos de C3-C4."}
+ ],
+ les:[
+  {t:"Lesión iatrogénica",c:"Biopsia de ganglio cervical, disección cervical",v:"Hombro caído, no puede encoger el hombro ni abducir más allá de 90°, escápula alada leve y dolor en el hombro.",e:"Pide encoger los hombros contra resistencia; mira la escápula al abducir."},
+  {t:"Lesión del ECM",c:"Trauma, tumor",v:"Debilidad para girar la cabeza hacia el lado opuesto y para inclinar hacia el mismo lado.",e:"Pide girar la cabeza contra tu mano y palpa el músculo."},
+  {t:"Síndrome del foramen yugular",c:"Tumor, trauma",v:"IX, X y XI juntos: disfagia, voz ronca y debilidad de trapecio y ECM.",e:"Exploración de IX, X y XI; imagen de la base del cráneo."}
+ ],
+ caso:{t:"Un hombro caído tras una biopsia",txt:"Hombre de 35 años al que se le tomó una biopsia de un ganglio del triángulo cervical posterior derecho. Después tiene dolor, el hombro derecho caído y no puede encogerlo ni abducir el brazo más allá de 90°.",q:"¿Qué músculo está paralizado?",
+  o:["Deltoides","Serrato anterior","Trapecio","Romboides"],ok:2,
+  ex:"El accesorio externo cruza el triángulo cervical posterior muy superficial: es vulnerable. Su lesión paraliza el trapecio y se produce caída del hombro y dificultad para elevar y abducir.",
+  pista:"¿Qué par pasa por un triángulo cervical muy superficial y qué músculo mueve al hombro hacia arriba?"}},
+
+/* XII */
+{r:"XII",nombre:"Hipogloso",tipo:"motor",nivel:["bul"],
+ dato:"La lengua se va hacia el lado de la lesión periférica.",
+ hace:["Movimientos de la lengua"],foramen:"Canal del hipogloso",
+ real:[
+  {n:"Núcleo hipogloso",tag:"Eferente somático",loc:"Bulbo, paramediano (trígono del hipogloso, suelo del IV ventrículo)",d:"Inerva los músculos intrínsecos de la lengua y los extrínsecos genioglosos, hioglosos y estiloglosos. El palatogloso es del X."}
+ ],
+ ap:{sitio:"Surco preolivar",rel:"Entre la pirámide y la oliva, en la cara anterolateral del bulbo, como diez a quince raicillas.",tip:"Preolivar = XII. Retroolivar = IX, X y XI."},
+ tr:[
+  {t:"Núcleo hipogloso",d:"Bulbo, junto a la línea media."},
+  {t:"Surco preolivar",d:"Las raicillas salen entre la pirámide y la oliva y convergen en dos haces."},
+  {t:"Canal del hipogloso",d:"Atraviesa el hueso occipital, sobre el cóndilo.",key:true},
+  {t:"Espacio retroestiloideo",d:"Emerge entre la carótida interna y la yugular interna, profundo al vientre posterior del digástrico.",key:true},
+  {t:"Arco sobre las carótidas",d:"Cruza las carótidas y da la rama superior del asa cervical (con fibras de C1)."},
+  {t:"Suelo de la boca",d:"Pasa sobre el hioides, profundo al milohioideo, y llega a los músculos de la lengua."}
+ ],
+ les:[
+  {t:"Lesión periférica",c:"Tumor, trauma de cuello, disección carotídea",v:"La lengua protruida se desvía hacia el lado lesionado, con atrofia y fasciculaciones ipsilaterales.",e:"Pide sacar la lengua y mírala en reposo dentro de la boca."},
+  {t:"Lesión central (supranuclear)",c:"ACV hemisférico",v:"La lengua se va hacia el lado de la hemiparesia (contralateral al hemisferio dañado) y sin atrofia ni fasciculaciones.",e:"Compara con el hallazgo de hemiparesia."},
+  {t:"Síndrome bulbar medial (Dejerine)",c:"Oclusión de la arteria espinal anterior",v:"Lengua desviada hacia el lado de la lesión, hemiparesia contralateral y pérdida contralateral de propiocepción y tacto fino.",e:"Busca el trío: lengua ipsilateral, parálisis y vibración contralaterales."},
+  {t:"ELA bulbar",c:"Neurodegeneración",v:"Atrofia lingual bilateral con fasciculaciones, disartria y disfagia.",e:"Observa la lengua en reposo; confirma con electromiografía."}
+ ],
+ caso:{t:"La lengua se va a la derecha",txt:"Hombre de 66 años con ACV súbito. Al sacar la lengua, esta se desvía hacia la derecha, con atrofia y fasciculaciones. Tiene hemiparesia izquierda.",q:"¿Por qué la lengua se desvía hacia el lado lesionado?",
+  o:["Porque el genioglosa sano empuja la lengua hacia el lado paralizado","Porque el nervio lingual está lesionado","Porque el palatogloso del lado sano se contrae","Porque el trigémino no inerva la lengua"],ok:0,
+  ex:"El genioglosa empuja la lengua hacia adelante y al lado contrario. Si un lado está paralizado, el sano gana y la lengua se va hacia el lado débil. Con hemiparesia contralateral piensa en síndrome bulbar medial (Dejerine).",
+  pista:"¿Qué lado empuja con más fuerza: el que funciona o el que está paralizado?"}}
+];
+
+var LV=[["cer","Prosencéfalo (telencéfalo y diencéfalo)"],["mes","Mesencéfalo"],["pon","Protuberancia"],["sulc","Surco bulbopontino"],["bul","Bulbo raquídeo"],["med","Médula cervical"]];
+
+var FOR=[
+ {n:"Lámina cribosa del etmoides",w:"Piso de la fosa craneal anterior",ner:[[0]],o:"También pasan ramas de la arteria etmoidal anterior."},
+ {n:"Canal óptico",w:"Ala menor del esfenoides",ner:[[1]],o:"Con la arteria oftálmica."},
+ {n:"Fisura orbitaria superior",w:"Entre ala mayor y menor del esfenoides",ner:[[2],[3],[4,"V1"],[5]],o:"También las venas oftálmicas. El III, V1 y VI pasan por el anillo tendinoso o cerca; el IV entra por fuera."},
+ {n:"Foramen redondo",w:"Ala mayor del esfenoides",ner:[[4,"V2"]],o:"Va hacia la fosa pterigopalatina."},
+ {n:"Foramen oval",w:"Ala mayor del esfenoides",ner:[[4,"V3"]],o:"Con la raíz motora del V; también la arteria meníngea accesoria."},
+ {n:"Meato acústico interno",w:"Cara posterior del peñasco del temporal",ner:[[6],[7]],o:"Con la arteria laberíntica."},
+ {n:"Foramen estilomastoideo",w:"Entre la estiloides y la mastoides",ner:[[6]],o:"Salida del facial del cráneo, hacia la parótida."},
+ {n:"Foramen yugular",w:"Entre el temporal y el occipital",ner:[[8],[9],[10]],o:"Con la vena yugular interna y el seno petroso inferior."},
+ {n:"Canal del hipogloso",w:"Occipital, sobre el cóndilo",ner:[[11]],o:"Salen las raicillas fusionadas del XII."},
+ {n:"Foramen magno",w:"Hueso occipital",ner:[[10,"XI (raíz espinal)"]],o:"Por aquí entra la raíz espinal del XI, y pasan el bulbo/médula y las arterias vertebrales."}
+];
+
+var QB=[
+ {n:1,q:"¿Por dónde cruzan los filetes olfatorios para llegar al bulbo?",o:["Lámina cribosa del etmoides","Canal óptico","Foramen redondo","Fisura orbitaria superior"],x:"Son axones finos que atraviesan los agujeritos de la lámina cribosa. Por eso un golpe frontal fuerte los puede cortar."},
+ {n:1,q:"¿Qué tiene de especial la vía olfatoria?",o:["Llega a la corteza sin hacer relevo en el tálamo","Se cruza por completo en el quiasma","Hace relevo en el geniculado lateral","Sale por el foramen yugular"],x:"Es la única vía sensorial que llega a la corteza (piriforme, amígdala) sin relevo talámico previo."},
+ {n:2,q:"Hemianopsia bitemporal. ¿Dónde está la lesión?",o:["Quiasma óptico","Tracto óptico izquierdo","Radiación óptica temporal","Nervio óptico derecho"],x:"El quiasma cruza las fibras nasales de cada retina (las que ven el campo temporal). Un adenoma de hipófisis las comprime desde abajo."},
+ {n:2,q:"Con la linterna alternada, ambas pupilas se dilatan cuando la luz pasa al ojo derecho y se contraen cuando pasa al izquierdo. ¿Qué es?",o:["Defecto pupilar aferente derecho (nervio óptico derecho dañado)","Parálisis del III derecho","Síndrome de Horner izquierdo","Lesión del ganglio ciliar izquierdo"],x:"El brazo aferente del reflejo fotomotor es el II. Si el óptico derecho está dañado, llega menos señal y las dos pupilas se contraen menos cuando le das luz a ese ojo."},
+ {n:3,q:"Ptosis, midriasis y ojo en «abajo y afuera». ¿Qué par está afectado?",o:["III","IV","VI","V1"],x:"Sin el III actúan solo el recto lateral (VI) y el oblicuo superior (IV): el ojo se va afuera y abajo. La ptosis es del elevador del párpado; la midriasis, de la pérdida del parasimpático."},
+ {n:3,q:"¿Qué núcleo da las fibras parasimpáticas del III?",o:["Edinger-Westphal","Salival superior","Motor dorsal del vago","Ambiguo"],x:"Edinger-Westphal, con relevo en el ganglio ciliar, para el esfínter de la pupila y el músculo ciliar (acomodación)."},
+ {n:3,q:"Diabético con parálisis del III pero pupila normal. ¿Por qué se respeta la pupila?",o:["Isquemia en la parte central del nervio; las fibras pupilares van por fuera y se salvan","Las fibras pupilares van por dentro, más protegidas","La pupila depende del IV","El reflejo pupilar depende solo del II"],x:"Las fibras pupilares van en la periferia del nervio. La isquemia microvascular daña el centro (motor) y las deja libres; una masa o un aneurisma las comprime primero a ellas."},
+ {n:4,q:"¿Cuál par craneal sale por la cara dorsal del tronco?",o:["IV","III","VI","XI"],x:"El troclear es el único: emerge detrás, bajo los colículos inferiores, y rodea el tronco."},
+ {n:4,q:"Diplopía al bajar escaleras. ¿Qué músculo está débil?",o:["Oblicuo superior","Recto lateral","Oblicuo inferior","Recto medial"],x:"El oblicuo superior baja el ojo cuando está aducido (mirada hacia abajo y adentro, como al leer o bajar escaleras)."},
+ {n:4,q:"¿Una lesión del núcleo troclear derecho afecta al oblicuo superior de qué lado?",o:["Izquierdo, por la decusación","Derecho","Ambos","Ninguno"],x:"Las fibras del IV se cruzan en el velo medular superior antes de salir. Por eso, a diferencia de los demás pares, la lesión nuclear es contralateral."},
+ {n:5,q:"¿Por qué foramen sale V3?",o:["Foramen oval","Foramen redondo","Fisura orbitaria superior","Foramen espinoso"],x:"V1 por la fisura orbitaria superior, V2 por el foramen redondo y V3 por el foramen oval: uno, dos, tres."},
+ {n:5,q:"¿Qué núcleo del V lleva dolor y temperatura de la cara?",o:["Núcleo espinal del trigémino","Núcleo sensitivo principal","Núcleo mesencefálico","Núcleo motor"],x:"El principal lleva tacto fino; el mesencefálico, propiocepción; el espinal baja hasta C2-C3 y lleva dolor y temperatura."},
+ {n:5,q:"Reflejo corneal: ¿cuáles son las vías?",o:["Aferente V1, eferente VII","Aferente VII, eferente V1","Aferente II, eferente III","Aferente V3, eferente XII"],x:"Tocas la córnea (la siente V1) y el parpadeo lo hace el orbicular de los párpados (VII)."},
+ {n:5,q:"Al abrir la boca, la mandíbula se desvía hacia la derecha. ¿Qué lesión hay?",o:["Rama motora del V derecho","Rama motora del V izquierdo","VII derecho","XII derecho"],x:"Los pterigoideos laterales empujan la mandíbula hacia adelante y al lado contrario. Si el derecho está débil, la mandíbula se va hacia el lado lesionado."},
+ {n:6,q:"¿Por qué el VI es un «falso localizador»?",o:["Tiene un trayecto ascendente largo y se estira con la hipertensión intracraneal","Porque sale por el foramen magno","Porque se cruza con el III","Porque inerva el recto medial"],x:"Sube pegado al clivus y se angula sobre el peñasco. Si el encéfalo desciende por presión alta, lo tensa: se paraliza sin que la lesión esté en el nervio."},
+ {n:6,q:"Parálisis del VI derecho: ¿qué ves?",o:["Ojo derecho en aducción y diplopía horizontal peor al mirar a la derecha","Ojo derecho hacia abajo y afuera","Ptosis derecha","Diplopía vertical al leer"],x:"Sin recto lateral, el recto medial gana: el ojo queda desviado hacia la nariz y no puede abducir."},
+ {n:7,q:"Parálisis facial: ¿qué hallazgo sugiere lesión periférica?",o:["Frente también paralizada","Frente respetada","Lengua desviada","Pérdida de la sensibilidad facial"],x:"La parte superior de la cara recibe inervación cortical bilateral. En lesiones centrales (ACV) la frente se salva; en las periféricas, no."},
+ {n:7,q:"Hiperacusia en una parálisis facial. ¿Qué rama falla?",o:["Nervio del estapedio","Cuerda del tímpano","Nervio petroso mayor","Rama cigomática"],x:"El estapedio amortigua el movimiento del estribo. Si falla, los sonidos parecen más fuertes y la lesión está antes de esa rama."},
+ {n:7,q:"El gusto de los dos tercios anteriores de la lengua viaja por…",o:["La cuerda del tímpano (VII)","El glosofaríngeo (IX)","La rama lingual del hipogloso","El nervio laríngeo superior"],x:"La cuerda del tímpano se une al nervio lingual (V3) para llegar a la lengua, pero las fibras gustativas son del VII."},
+ {n:8,q:"Hipoacusia neurosensorial izquierda: ¿qué hace el Weber?",o:["Lateraliza al oído derecho (el sano)","Lateraliza al oído izquierdo","Nunca lateraliza","Rinne negativo a la izquierda"],x:"En pérdida neurosensorial el sonido por vía ósea se oye mejor en el oído sano. En la conductiva, mejor en el enfermo."},
+ {n:8,q:"¿Qué dos pares entran juntos por el meato acústico interno?",o:["VII y VIII","V y VI","IX y X","III y IV"],x:"VII y VIII (con el nervio intermedio). Por eso un schwannoma vestibular puede acabar dando parálisis facial."},
+ {n:9,q:"Dolor paroxístico en la garganta que irradia al oído al tragar. ¿Qué es?",o:["Neuralgia glosofaríngea","Neuralgia del V3","Parálisis del recurrente","Neuritis del VII"],x:"Territorio sensitivo del IX (faringe, amígdala, oído medio). Puede asociarse a síncope por estimulación del nervio del seno carotídeo."},
+ {n:9,q:"Reflejo nauseoso: ¿cuáles son las vías?",o:["Aferente IX, eferente X","Aferente X, eferente IX","Aferente V, eferente XII","Aferente VII, eferente XI"],x:"Tocas la pared faríngea (la siente el IX) y la contracción faríngea la ejecuta el vago (X)."},
+ {n:9,q:"Parasimpático hacia la parótida: ¿cuál es la ruta?",o:["Salival inferior, nervio timpánico, petroso menor y ganglio ótico","Salival superior, cuerda del tímpano y ganglio submandibular","Motor dorsal del vago y ganglio celíaco","Ambiguo y nervio estilofaríngeo"],x:"Es del IX: núcleo salival inferior, nervio timpánico (Jacobson), petroso menor y ganglio ótico. La submandibular y sublingual dependen del VII."},
+ {n:10,q:"El nervio laríngeo recurrente izquierdo rodea…",o:["El arco aórtico (ligamento arterioso)","La arteria subclavia","La arteria carótida común","La vena yugular interna"],x:"El izquierdo rodea el arco aórtico; por eso un aneurisma aórtico o un cáncer de pulmón lo comprimen. El derecho rodea la subclavia."},
+ {n:10,q:"En una lesión del vago derecho, la úvula…",o:["Se desvía hacia el lado izquierdo, el sano","Se desvía hacia el derecho","No se mueve nunca","Se eleva en bloque"],x:"El lado sano eleva y jala la úvula hacia sí: la úvula huye del lado lesionado."},
+ {n:10,q:"¿Cuál es el núcleo parasimpático del vago?",o:["Núcleo motor dorsal","Núcleo ambiguo","Salival inferior","Edinger-Westphal"],x:"El ambiguo inerva músculos de faringe y laringe. El motor dorsal es el parasimpático visceral."},
+ {n:11,q:"La raíz espinal del XI entra al cráneo por…",o:["Foramen magno","Foramen yugular","Canal del hipogloso","Foramen oval"],x:"Asciende por el foramen magno y sale luego por el foramen yugular."},
+ {n:11,q:"No puede encoger el hombro derecho tras una biopsia en el triángulo cervical posterior. ¿Qué músculo está débil?",o:["Trapecio","Deltoides","Serrato anterior","Romboides"],x:"El accesorio cruza el triángulo cervical posterior muy superficial. Su lesión paraliza el trapecio."},
+ {n:12,q:"Lengua protruida hacia la derecha, con atrofia y fasciculaciones a la derecha. ¿Qué lesión hay?",o:["Periférica del XII derecho","Periférica del XII izquierdo","Del hemisferio derecho","Del X derecho"],x:"Atrofia y fasciculaciones indican neurona motora inferior ipsilateral. El genioglosa sano empuja la lengua hacia el lado débil."},
+ {n:12,q:"¿Por dónde sale el XII del cráneo?",o:["Canal del hipogloso","Foramen yugular","Foramen magno","Foramen oval"],x:"Atraviesa el hueso occipital por el canal del hipogloso, sobre el cóndilo."},
+ {n:12,q:"En el síndrome bulbar medial (Dejerine), ¿qué pasa con la lengua y la fuerza?",o:["Lengua ipsilateral a la lesión y hemiparesia contralateral","Lengua contralateral y hemiparesia ipsilateral","Lengua ipsilateral y hemiparesia ipsilateral","No hay desviación"],x:"Núcleo del XII (ipsilateral) y pirámide medial aún sin cruzar (parálisis contralateral). Irriga la arteria espinal anterior."},
+ {n:0,q:"¿Qué pares atraviesan el foramen yugular?",o:["IX, X y XI","VII y VIII","III, IV y VI","V2 y V3"],x:"IX, X y XI salen juntos con la vena yugular interna. Su lesión conjunta se llama síndrome del foramen yugular."},
+ {n:0,q:"¿Qué pares entran a la órbita por la fisura orbitaria superior?",o:["III, IV, V1 y VI","II y III","V2 y VI","III y VII"],x:"III, IV, V1 y VI; el II va por el canal óptico y V2 por el foramen redondo."},
+ {n:0,q:"¿Qué par emerge del surco bulbopontino, en posición medial y sobre la pirámide?",o:["VI","VII","XII","V"],x:"El abducens es medial; el VII y el VIII salen lateralmente en el mismo surco. El XII sale más abajo, en el surco preolivar."}
+];
+
+/* ============== ESTADO ============== */
+var cur=0, tab="real", cstate={}, seen={}, solved={}, ftr="all", apLv=null, stepI=0, tmr=null, openNuc={}, openLes={};
+var TABS=[["real","Origen real"],["ap","Origen aparente"],["tr","Trayecto"],["les","Lesiones"],["caso","Caso clínico"]];
+
+/* ============== MAPA ============== */
+var PM=[
+ {d:"M230 80 Q226 100 214 116",w:6,dot:[230,64],extra:'<ellipse class="bulb" cx="230" cy="64" rx="11" ry="17"/>'},
+ {d:"M206 128 Q240 118 276 94",w:7,dot:[232,121]},
+ {d:"M205 205 Q226 200 246 188 Q262 180 276 176",w:3.5,dot:[222,203]},
+ {d:"M244 224 Q268 214 280 186 Q286 170 296 160",w:3,dot:[248,226],dash:true},
+ {d:"M262 268 Q284 262 306 250",w:8,dot:[268,268]},
+ {d:"M210 327 Q222 308 230 290",w:3.5,dot:[212,327]},
+ {d:"M244 328 Q270 314 296 304",w:4,dot:[246,326]},
+ {d:"M254 336 Q276 340 304 338",w:4,dot:[268,343],small:true},
+ {d:"M252 360 Q276 362 298 370",w:3.5,dot:[252,360]},
+ {d:"M252 384 Q278 390 304 402",w:4.5,dot:[254,384]},
+ {d:"M252 408 Q274 416 290 434 M236 492 Q250 460 252 412",w:3.5,dot:[256,408],dash2:true},
+ {d:"M219 392 Q232 420 262 446",w:3.5,dot:[218,392]}
+];
+function nvSvg(i,right){
+  var p=PM[i], t=T[N[i].tipo];
+  var s='<g class="nv'+(right?'':' mirror')+'" data-n="'+i+'" style="--c:'+t.c+'"'+(right?' tabindex="0" role="button" aria-label="Par '+N[i].r+', '+N[i].nombre+'"':'')+'>';
+  var inner='<path class="halo" d="'+p.d+'"/><path class="ln" d="'+p.d+'" stroke-width="'+p.w+'"'+(p.dash?' stroke-dasharray="5 4"':'')+'/>';
+  if(p.dash2){inner='<path class="halo" d="'+p.d+'"/><path class="ln" d="M252 408 Q274 416 290 434" stroke-width="3.5"/><path class="ln" d="M236 492 Q250 460 252 412" stroke-width="2.5" stroke-dasharray="5 4"/>'}
+  if(p.extra) inner+=p.extra;
+  if(right){
+    inner+='<circle class="dot" cx="'+p.dot[0]+'" cy="'+p.dot[1]+'" r="11"/><text x="'+p.dot[0]+'" y="'+(p.dot[1]+3.4)+'" style="font-size:'+(N[i].r.length>3?7.4:9.5)+'px">'+N[i].r+'</text>';
+    return s+inner+'</g>';
+  }
+  inner+='<circle class="dot" cx="'+p.dot[0]+'" cy="'+p.dot[1]+'" r="5.5"/>';
+  return '<g transform="translate(400 0) scale(-1 1)">'+s+inner+'</g></g>';
+}
+function buildMap(){
+  var base=''
+   +'<ellipse cx="150" cy="30" rx="70" ry="58" fill="#F0E3EE"/><ellipse cx="250" cy="30" rx="70" ry="58" fill="#F0E3EE"/>'
+   +'<ellipse cx="86" cy="178" rx="32" ry="68" fill="#F3E9F2"/><ellipse cx="314" cy="178" rx="32" ry="68" fill="#F3E9F2"/>'
+   +'<ellipse cx="100" cy="315" rx="40" ry="62" fill="#EFE3EE"/><ellipse cx="300" cy="315" rx="40" ry="62" fill="#EFE3EE"/>'
+   +'<path d="M168 172 Q200 160 232 172 Q246 205 238 236 L262 246 Q274 282 258 326 L246 336 Q250 420 232 490 L226 592 L174 592 L168 490 Q150 420 154 336 L142 326 Q126 282 138 246 L162 236 Q154 205 168 172 Z" fill="#F6EAF2" stroke="#CDB8D0" stroke-width="1.5"/>'
+   +'<path d="M144 262 Q200 276 256 262 M142 284 Q200 298 258 284 M146 306 Q200 318 254 306" fill="none" stroke="#E6D3E6" stroke-width="2"/>'
+   +'<ellipse cx="200" cy="205" rx="9" ry="18" fill="#E5D3E5"/>'
+   +'<path d="M146 327 Q200 334 254 327" fill="none" stroke="#BFA6C4" stroke-width="2" stroke-dasharray="4 3"/>'
+   +'<rect x="185" y="338" width="13" height="148" rx="6" fill="#EBDCEB"/><rect x="202" y="338" width="13" height="148" rx="6" fill="#EBDCEB"/>'
+   +'<ellipse cx="236" cy="395" rx="15" ry="33" fill="#E8D6E8"/><ellipse cx="164" cy="395" rx="15" ry="33" fill="#E8D6E8"/>'
+   +'<ellipse cx="200" cy="129" rx="22" ry="9" fill="#E7D5E7"/>'
+   +'<path d="M190 133 Q172 150 168 172 M210 133 Q228 150 232 172" fill="none" stroke="#D9C4DA" stroke-width="3"/>'
+   +'<text class="alab" x="322" y="212">Mesencéfalo</text><text class="alab" x="322" y="292">Protuberancia</text><text class="alab" x="322" y="402">Bulbo</text><text class="alab" x="322" y="548">Médula</text>';
+  var left='', right='';
+  for(var i=0;i<12;i++){left+=nvSvg(i,false);}
+  for(var j=0;j<12;j++){right+=nvSvg(j,true);}
+  $("#mapHost").innerHTML='<svg viewBox="0 0 400 600" role="group" aria-label="Mapa ventral del tronco encefálico con los 12 pares craneales">'+base+left+right+'</svg>';
+}
+
+/* ============== HERO ============== */
+function buildRoster(){
+  var h='';
+  N.forEach(function(n,i){
+    var t=T[n.tipo];
+    h+='<button class="rbtn" data-n="'+i+'" aria-pressed="false" style="--c:'+t.c+';--ct:'+t.t+'"><b>'+n.r+'</b><span>'+n.nombre+'</span><div class="pd">'+'<i></i><i></i><i></i><i></i><i></i></div></button>';
+  });
+  $("#roster").innerHTML=h;
+}
+function updateRoster(){
+  $$(".rbtn").forEach(function(b){
+    var i=+b.dataset.n;
+    b.setAttribute("aria-pressed",i===cur?"true":"false");
+    b.classList.toggle("dim",ftr!=="all"&&N[i].tipo!==ftr);
+    var s=seen[i]?seen[i].size:0;
+    var dots=b.querySelectorAll(".pd i");
+    for(var k=0;k<5;k++){dots[k].classList.toggle("on",k<s)}
+  });
+  $$(".nv").forEach(function(g){
+    var i=+g.dataset.n;
+    g.classList.toggle("on",i===cur);
+    g.classList.toggle("dim",ftr!=="all"&&N[i].tipo!==ftr);
+  });
+  $$(".fchip").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.f===ftr?"true":"false")});
+  var cnt=0;for(var k in solved){if(solved[k])cnt++}
+  $("#scoreTag").textContent="Casos resueltos: "+cnt+"/12";
+}
+function renderPreview(){
+  var n=N[cur],t=T[n.tipo];
+  var p=$("#preview");
+  p.style.setProperty("--c",t.c);p.style.setProperty("--ct",t.t);
+  p.innerHTML='<h3>'+n.r+' · '+n.nombre+'<span class="tipo">'+t.l+'</span></h3><p>'+n.dato+'</p><button class="solid" data-act="go">Explorar este par</button>';
+}
+
+/* ============== EXPLORADOR ============== */
+function renderStrip(){
+  var h='';
+  N.forEach(function(n,i){
+    var t=T[n.tipo];
+    h+='<button data-n="'+i+'" data-go="1" aria-pressed="'+(i===cur?'true':'false')+'" aria-label="Par '+n.r+', '+n.nombre+'" style="--c:'+t.c+'">'+n.r+'</button>';
+  });
+  $("#strip").innerHTML=h;
+}
+function renderHead(){
+  var n=N[cur],t=T[n.tipo];
+  var h='<div class="nhead" style="--c:'+t.c+';--ct:'+t.t+'"><div class="badge">'+n.r+'</div><div><h3>'+n.nombre+'<span class="tipo">'+t.l+'</span></h3><p class="dato">'+n.dato+'</p><div class="hace">'+n.hace.map(function(x){return '<span>'+x+'</span>'}).join('')+'</div></div><div class="hnav"><button class="ghost" data-act="prev">&larr; Anterior</button><button class="ghost" data-act="next">Siguiente &rarr;</button></div></div>';
+  $("#nerveHead").innerHTML=h;
+  var tb='';
+  TABS.forEach(function(x){tb+='<button class="tab" role="tab" data-tab="'+x[0]+'" aria-selected="'+(x[0]===tab?'true':'false')+'">'+x[1]+'</button>'});
+  $("#tabs").innerHTML=tb;
+  var host=$(".band");
+  host.style.setProperty("--c",t.c);host.style.setProperty("--ct",t.t);
+}
+function renderPanel(){
+  stopPlay();
+  var n=N[cur];
+  (seen[cur]||(seen[cur]=new Set())).add(tab);
+  var h='';
+  if(tab==="real") h=realHTML(n);
+  else if(tab==="ap") h=apHTML(n);
+  else if(tab==="tr") h=trHTML(n);
+  else if(tab==="les") h=lesHTML(n);
+  else h=casoHTML(cur);
+  var p=$("#panel");
+  p.classList.remove("panel");void p.offsetWidth;p.classList.add("panel");
+  p.innerHTML=h;
+  updateRoster();
+}
+function realHTML(n){
+  var all=Object.keys(openNuc).length&&n.real.every(function(x,k){return openNuc[cur+"-"+k]});
+  var h='<div class="tip"><span>Toca cada núcleo para ver qué hace y qué inerva.</span><button class="ghost" data-act="nucall">'+(all?'Cerrar todos':'Abrir todos')+'</button></div>';
+  n.real.forEach(function(x,k){
+    var o=!!openNuc[cur+"-"+k];
+    h+='<button class="nuc" data-k="'+k+'" aria-expanded="'+o+'"><span class="nt">'+x.tag+'</span><strong>'+x.n+'</strong><span class="loc">'+x.loc+'</span></button>';
+    if(o)h+='<div class="nbody">'+x.d+'</div>';
+  });
+  return h;
+}
+function apHTML(n){
+  var h='<div class="apg"><div class="apc"><small class="ui" style="font-weight:700;color:var(--muted)">Dónde aparece</small><div class="big">'+n.ap.sitio+'</div><p>'+n.ap.rel+'</p><p class="tp">'+n.ap.tip+'</p><button class="solid" data-act="seemap">Verlo en el mapa</button></div>';
+  h+='<div class="lvbox"><h4>¿Quién más sale en cada nivel? Toca uno.</h4><div class="lvs">';
+  LV.forEach(function(l){
+    var mine=n.nivel.indexOf(l[0])>-1;
+    h+='<button class="lv'+(mine?' mine':'')+'" data-lv="'+l[0]+'" aria-pressed="'+(apLv===l[0])+'">'+l[1]+(mine?'  (este par)':'')+'</button>';
+  });
+  h+='</div><div class="lvres">';
+  var list=N.map(function(m,i){return [m,i]}).filter(function(a){return a[0].nivel.indexOf(apLv)>-1});
+  if(!list.length) h+='<span style="color:var(--muted)">Ningún par craneal sale a este nivel (excepto la raíz espinal del XI).</span>';
+  list.forEach(function(a){
+    var m=a[0],i=a[1];
+    h+='<button class="nchip'+(i===cur?' me':'')+'" data-n="'+i+'" data-go="1" style="--cc:'+T[m.tipo].c+'">'+m.r+' '+m.nombre+'<small>'+m.ap.sitio+'</small></button>';
+  });
+  h+='</div></div></div>';
+  return h;
+}
+function trHTML(n){
+  var k=n.tr.length, s=n.tr[stepI];
+  var pct=Math.round((stepI+1)/k*100);
+  var h='<div class="tip"><span>Recorre el trayecto paso a paso. Los números con contorno rosa son puntos clave que suelen preguntar.</span></div>';
+  h+='<div class="prog"><div style="width:'+pct+'%"></div></div><div class="sdots">';
+  n.tr.forEach(function(x,i){h+='<button class="'+(i<stepI?'past':'')+(i===stepI?' now':'')+(x.key?' key':'')+'" data-step="'+i+'" aria-label="Paso '+(i+1)+': '+x.t+'">'+(i+1)+'</button>'});
+  h+='</div><div class="step"><small>Paso '+(stepI+1)+' de '+k+'</small><h3>'+s.t+'</h3><p>'+s.d+'</p>'+(s.key?'<span class="kt">Punto clave</span>':'')+'</div>';
+  h+='<div class="ctl"><button class="ghost" data-act="sprev"'+(stepI===0?' disabled':'')+'>&larr; Atrás</button><button class="solid" data-act="snext"'+(stepI===k-1?' disabled':'')+'>Siguiente &rarr;</button><button class="ghost" data-act="play">'+(tmr?'Pausar':'Reproducir')+'</button><span class="exitnote">Sale del cráneo por: <b>'+n.foramen+'</b></span></div>';
+  return h;
+}
+function lesHTML(n){
+  var h='<div class="tip"><span>Abre cada lesión: qué ves en el paciente y cómo lo compruebas.</span></div>';
+  n.les.forEach(function(x,k){
+    var o=!!openLes[cur+"-"+k];
+    h+='<div class="les"><button class="lh" data-k="'+k+'" aria-expanded="'+o+'"><div><strong>'+x.t+'</strong><span>'+x.c+'</span></div><em>'+(o?'\u2212':'+')+'</em></button>';
+    if(o)h+='<div class="lb"><div><h5>Lo que ves</h5><p>'+x.v+'</p></div><div><h5>Cómo lo compruebas</h5><p>'+x.e+'</p></div></div>';
+    h+='</div>';
+  });
+  return h;
+}
+function casoHTML(i){
+  var c=N[i].caso;
+  var s=cstate[i]||(cstate[i]={pick:null,hint:false,ord:shuffle([0,1,2,3])});
+  var h='<div class="case"><div class="vig"><h3>'+c.t+'</h3><p>'+c.txt+'</p></div><p class="q">'+c.q+'</p><div class="opts">';
+  s.ord.forEach(function(k,pos){
+    var picked=s.pick!==null,cl="opt";
+    if(picked){if(k===c.ok)cl+=" right";else if(k===s.pick)cl+=" wrong";else cl+=" off"}
+    h+='<button class="'+cl+'" data-act="pick" data-k="'+k+'"'+(picked?' disabled':'')+'><span class="L">'+"ABCD".charAt(pos)+'</span><span>'+c.o[k]+'</span></button>';
+  });
+  h+='</div>';
+  if(s.pick===null){
+    h+='<div class="row"><button class="ghost" data-act="hint">'+(s.hint?'Esconder pista':'Dame una pista')+'</button></div>';
+    if(s.hint)h+='<div class="hint">'+c.pista+'</div>';
+  }else{
+    var good=s.pick===c.ok;
+    h+='<div class="fb '+(good?'ok':'no')+'"><strong>'+(good?'Bien. ':'Casi. La respuesta era: '+c.o[c.ok]+'. ')+'</strong>'+c.ex+'</div>';
+    h+='<div class="row"><button class="ghost" data-act="retry">Reintentar</button><button class="solid" data-act="nextcase">Siguiente par &rarr;</button></div>';
+  }
+  return h+'</div>';
+}
+function stopPlay(){if(tmr){clearInterval(tmr);tmr=null}}
+
+function select(i,opt){
+  opt=opt||{};
+  cur=i;apLv=N[i].nivel[0];stepI=0;
+  if(opt.tab)tab=opt.tab;
+  renderPreview();renderStrip();renderHead();renderPanel();updateRoster();
+  if(opt.go){var e=$("#explorar");if(e)e.scrollIntoView({behavior:"smooth",block:"start"})}
+}
+
+/* ============== FORAMENES ============== */
+function buildForamenes(){
+  var h='';
+  FOR.forEach(function(f,i){
+    h+='<button class="fc" data-f="'+i+'" aria-expanded="false"><h4>'+f.n+'</h4><span class="where">'+f.w+'</span><span class="qm">¿Qué pasa por aquí? Toca para ver.</span><div class="back"><div class="chips">';
+    f.ner.forEach(function(x){
+      var m=N[x[0]];
+      h+='<span class="nchip" data-n="'+x[0]+'" data-go="1" role="button" tabindex="0" style="--cc:'+T[m.tipo].c+'">'+(x[1]||m.r)+' '+(x[1]?'':m.nombre)+'</span>';
+    });
+    h+='</div><span class="fother">'+f.o+'</span></div></button>';
+  });
+  $("#fgrid").innerHTML=h;
+}
+
+/* ============== QUIZ ============== */
+var qz={scope:"all",pool:[],i:0,sel:null,res:[],phase:"start"};
+function qStart(){
+  var h='<p style="margin:0 0 6px;font-size:1.05rem">Elige de qué quieres que sea:</p><div class="qchips" id="qchips"><button data-s="all" aria-pressed="'+(qz.scope==="all")+'">Todos los pares (12 preguntas)</button>';
+  N.forEach(function(n,i){h+='<button data-s="'+(i+1)+'" aria-pressed="'+(qz.scope===String(i+1))+'">'+n.r+'</button>'});
+  h+='</div><div class="row"><button class="solid" data-q="start">Empezar</button></div>';
+  $("#qbox").innerHTML=h;qz.phase="start";
+}
+function qBuild(list){
+  qz.pool=list.map(function(q){return {q:q,opts:shuffle(q.o.map(function(t,k){return {t:t,ok:k===0}}))}});
+  qz.i=0;qz.sel=null;qz.res=[];qz.phase="run";
+  qRender();
+}
+function qBegin(){
+  var list;
+  if(qz.scope==="all") list=shuffle(QB).slice(0,12);
+  else list=shuffle(QB.filter(function(q){return q.n===+qz.scope}));
+  qBuild(list);
+}
+function qRender(){
+  var p=qz.pool[qz.i],tot=qz.pool.length;
+  var h='<div class="qprog"><div style="width:'+Math.round(qz.i/tot*100)+'%"></div></div><div class="qmeta"><span>Pregunta '+(qz.i+1)+' de '+tot+'</span><span>Aciertos: '+qz.res.filter(function(r){return r.ok}).length+'</span></div><p class="qq">'+p.q.q+'</p><div class="opts">';
+  p.opts.forEach(function(o,k){
+    var cl="opt";
+    if(qz.sel!==null){if(o.ok)cl+=" right";else if(k===qz.sel)cl+=" wrong";else cl+=" off"}
+    h+='<button class="'+cl+'" data-q="pick" data-k="'+k+'"'+(qz.sel!==null?' disabled':'')+'><span class="L">'+"ABCD".charAt(k)+'</span><span>'+o.t+'</span></button>';
+  });
+  h+='</div>';
+  if(qz.sel!==null){
+    var good=p.opts[qz.sel].ok;
+    h+='<div class="fb '+(good?'ok':'no')+'"><strong>'+(good?'Correcto. ':'No es esa. ')+'</strong>'+p.q.x+'</div><div class="row"><button class="solid" data-q="next">'+(qz.i===tot-1?'Ver resultados':'Siguiente')+'</button></div>';
+  }
+  $("#qbox").innerHTML=h;
+}
+function qResults(){
+  qz.phase="end";
+  var tot=qz.res.length,ok=qz.res.filter(function(r){return r.ok}).length,pct=ok/tot;
+  var by={};
+  qz.res.forEach(function(r){var k=r.q.n;by[k]=by[k]||{ok:0,t:0};by[k].t++;if(r.ok)by[k].ok++});
+  var msg=pct>=.85?"Vas muy bien. Sube la dificultad: repite solo los fallados o pasa a los casos clínicos de cada par.":pct>=.6?"Base sólida, pero con huecos. Repasa los pares en rojo y vuelve a intentarlo.":"Todavía no queda. Vuelve al explorador de los pares en rojo, mira el trayecto y las lesiones, y reintenta.";
+  var h='<div class="big-score">'+ok+'<small> / '+tot+'</small></div><p style="font-size:1.1rem;margin:8px 0 0">'+msg+'</p><div class="pern">';
+  Object.keys(by).sort(function(a,b){return a-b}).forEach(function(k){
+    var b=by[k],lab=k==="0"?"General":N[k-1].r;
+    h+='<button class="'+(b.ok===b.t?'g':'r')+'" data-n="'+(k==="0"?"":k-1)+'" '+(k==="0"?'disabled':'data-go="1"')+'>'+lab+' '+b.ok+'/'+b.t+'</button>';
+  });
+  h+='</div>';
+  var wrong=qz.res.filter(function(r){return !r.ok});
+  if(wrong.length){
+    h+='<h3 style="margin:0 0 10px;color:#fff">Para repasar</h3>';
+    wrong.forEach(function(r){
+      var tag=r.q.n?'<button class="ghost" style="margin-top:2px" data-n="'+(r.q.n-1)+'" data-go="1">Abrir el '+N[r.q.n-1].r+'</button>':'';
+      h+='<div class="rev"><h4>'+r.q.q+'</h4><p class="you">Tu respuesta: '+r.you+'</p><p class="ans">Correcta: '+r.right+'</p><p>'+r.q.x+'</p>'+tag+'</div>';
+    });
+  }else h+='<p>No fallaste ninguna. Prueba con un par concreto o repite con otro conjunto de preguntas.</p>';
+  h+='<div class="row"><button class="solid" data-q="again">Nuevo conjunto</button>'+(wrong.length?'<button class="ghost" data-q="wrong">Repetir solo los fallados</button>':'')+'<button class="ghost" data-q="menu">Cambiar alcance</button></div>';
+  $("#qbox").innerHTML=h;
+}
+
+/* ============== EVENTOS ============== */
+document.addEventListener("click",function(e){
+  var el=e.target.closest("button, .nv, .nchip");
+  if(!el)return;
+
+  /* mapa */
+  if(el.classList.contains("nv")){select(+el.dataset.n);return}
+  /* filtros */
+  if(el.classList.contains("fchip")){ftr=el.dataset.f;updateRoster();return}
+  /* roster */
+  if(el.classList.contains("rbtn")){select(+el.dataset.n);return}
+  /* foramen: chips */
+  if(el.classList.contains("nchip")){e.stopPropagation();select(+el.dataset.n,{go:true});return}
+  /* tarjetas foramen */
+  if(el.classList.contains("fc")){var o=el.classList.toggle("open");el.setAttribute("aria-expanded",o);return}
+  /* strip y botones go */
+  if(el.dataset&&el.dataset.go&&el.dataset.n!==undefined&&el.dataset.n!==""){select(+el.dataset.n,{go:true,tab:"real"===tab?undefined:undefined});return}
+
+  var a=el.dataset.act, q=el.dataset.q;
+
+  if(el.classList.contains("tab")){tab=el.dataset.tab;stepI=0;renderHead();renderPanel();return}
+  if(el.classList.contains("nuc")){var key=cur+"-"+el.dataset.k;openNuc[key]=!openNuc[key];renderPanel();return}
+  if(el.classList.contains("lh")){var k2=cur+"-"+el.dataset.k;openLes[k2]=!openLes[k2];renderPanel();return}
+  if(el.classList.contains("lv")){apLv=el.dataset.lv;renderPanel();return}
+  if(el.dataset&&el.dataset.step!==undefined){stopPlay();stepI=+el.dataset.step;renderPanel();return}
+  if(el.id==="revealAll"){$$(".fc").forEach(function(c){c.classList.add("open");c.setAttribute("aria-expanded","true")});return}
+  if(el.id==="hideAll"){$$(".fc").forEach(function(c){c.classList.remove("open");c.setAttribute("aria-expanded","false")});return}
+
+  if(a==="go"){var ex=$("#explorar");ex.scrollIntoView({behavior:"smooth",block:"start"});return}
+  if(a==="prev"){select((cur+11)%12);return}
+  if(a==="next"){select((cur+1)%12);return}
+  if(a==="nucall"){var n=N[cur];var all=n.real.every(function(x,k){return openNuc[cur+"-"+k]});n.real.forEach(function(x,k){openNuc[cur+"-"+k]=!all});renderPanel();return}
+  if(a==="seemap"){
+    $("#mapa").scrollIntoView({behavior:"smooth",block:"start"});
+    $$(".nv").forEach(function(g){g.classList.remove("pulse")});
+    setTimeout(function(){$$('.nv[data-n="'+cur+'"]').forEach(function(g){g.classList.add("pulse")});},250);
+    $("#cap").innerHTML="<b>"+N[cur].r+" · "+N[cur].nombre+"</b>: "+N[cur].ap.sitio;
+    return;
+  }
+  if(a==="sprev"){stopPlay();stepI=Math.max(0,stepI-1);renderPanel();return}
+  if(a==="snext"){stopPlay();stepI=Math.min(N[cur].tr.length-1,stepI+1);renderPanel();return}
+  if(a==="play"){
+    if(tmr){stopPlay();renderPanel();return}
+    if(stepI===N[cur].tr.length-1)stepI=0;
+    var kk=N[cur].tr.length;
+    tmr=setInterval(function(){
+      if(stepI<kk-1){stepI++;var pnl=$("#panel");pnl.innerHTML=trHTML(N[cur])}
+      else{stopPlay();$("#panel").innerHTML=trHTML(N[cur])}
+    },3200);
+    $("#panel").innerHTML=trHTML(N[cur]);
+    return;
+  }
+  if(a==="pick"){
+    var s=cstate[cur];if(!s||s.pick!==null)return;
+    s.pick=+el.dataset.k;
+    if(s.pick===N[cur].caso.ok)solved[cur]=true;
+    renderPanel();return;
+  }
+  if(a==="hint"){var st=cstate[cur];st.hint=!st.hint;renderPanel();return}
+  if(a==="retry"){delete cstate[cur];solved[cur]=false;renderPanel();return}
+  if(a==="nextcase"){select((cur+1)%12,{tab:"caso"});return}
+
+  /* quiz */
+  var sc=el.closest("#qchips");
+  if(sc&&el.dataset.s){qz.scope=el.dataset.s;qStart();return}
+  if(q==="start"){qBegin();return}
+  if(q==="pick"){
+    if(qz.sel!==null)return;
+    qz.sel=+el.dataset.k;
+    var cp=qz.pool[qz.i];
+    var okk=cp.opts[qz.sel].ok;
+    var right=cp.opts.filter(function(o){return o.ok})[0].t;
+    qz.res.push({q:cp.q,ok:okk,you:cp.opts[qz.sel].t,right:right});
+    qRender();return;
+  }
+  if(q==="next"){
+    if(qz.i<qz.pool.length-1){qz.i++;qz.sel=null;qRender()}
+    else qResults();
+    return;
+  }
+  if(q==="again"){qBegin();return}
+  if(q==="wrong"){
+    var wr=qz.res.filter(function(r){return !r.ok}).map(function(r){return r.q});
+    qBuild(shuffle(wr));return;
+  }
+  if(q==="menu"){qStart();return}
+});
+
+document.addEventListener("keydown",function(e){
+  if((e.key==="Enter"||e.key===" ")&&e.target.classList){
+    if(e.target.classList.contains("nv")){e.preventDefault();select(+e.target.dataset.n)}
+    else if(e.target.classList.contains("nchip")&&e.target.tagName==="SPAN"){e.preventDefault();e.stopPropagation();select(+e.target.dataset.n,{go:true})}
+  }
+});
+
+/* hover en el mapa */
+document.addEventListener("mouseover",function(e){
+  var g=e.target.closest(".nv");
+  if(!g)return;
+  var i=+g.dataset.n,n=N[i];
+  $("#cap").innerHTML="<b>"+n.r+" · "+n.nombre+"</b> ("+T[n.tipo].l.toLowerCase()+"): "+n.ap.sitio;
+});
+document.addEventListener("focusin",function(e){
+  var g=e.target.closest&&e.target.closest(".nv");
+  if(!g)return;
+  var n=N[+g.dataset.n];
+  $("#cap").innerHTML="<b>"+n.r+" · "+n.nombre+"</b>: "+n.ap.sitio;
+});
+
+/* ============== INICIO ============== */
+buildMap();buildRoster();buildForamenes();qStart();
+select(0);
+</script>
+</body>
+</html>
